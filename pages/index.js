@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Header from '../components/header'
+import LogIn from './login'
 
 export default function Home() {
   return (
@@ -8,7 +9,10 @@ export default function Home() {
         <title>Antic</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header/>
+      {
+        //<Header/>
+      }
+      <LogIn/>
     </div>
   )
 }
