@@ -4,7 +4,7 @@ const classes = (names) =>{
 }
 
 const space = (h) =>{
-    let sty = {height: h + "px;"}
+    let sty = {height: h + "px"}
     return(
         <div style={sty}>
 
@@ -12,7 +12,25 @@ const space = (h) =>{
     )
 }
 
+const vLine = () =>{
+    return(
+        <div className="vL">
+            
+        </div>
+    )
+}
+
+const hLine = () =>{
+    return(
+        <div className="hL">
+
+        </div>
+    )
+}
+
 module.exports ={
     classes,
-    space
+    space,
+    vLine,
+    hLine
 }

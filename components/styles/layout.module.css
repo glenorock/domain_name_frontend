@@ -10,7 +10,15 @@
 
 .login_box {
     width: 400px;
-    height: 400px;
+    height: fit-content
+}
+
+.signup_box{
+    width: 800px;
+    height: fit-content;
+}
+
+.layout_container{
     background-color:#FFFFFF;
     border: 1px solid transparent;
     border-radius: 25px;
@@ -21,7 +29,7 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
-.login_layout_logo {
+.layout_logo{
     border: 1px solid transparent;
     padding: 2px;
     border-color: #ccc;
@@ -29,7 +37,14 @@
     width: 100px;
     height: 100px;
     position: relative;
+}
+
+.login_layout_logo {
     top: -50px;
     left: 37.5%;
 }
 
+.signup_layout_logo {
+    top: -50px;
+    left: 42%;
+}
