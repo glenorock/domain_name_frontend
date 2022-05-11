@@ -17,7 +17,6 @@ export default function DomainDetailsInfoDisplay(props) {
                 {title}
             </Typography>
             {body}
-            <br/>
         </div>
     );
 }
