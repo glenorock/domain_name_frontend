@@ -12,11 +12,15 @@ export default function Layout({children}){
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
             </div>
-            <Header/>
+            {
+                //<Header/>
+            }
             <div className={styles.main}>
                 {children}
             </div>
-            <Footer/>
+            {
+                //<Footer/>
+            }
         </div>
     )
 }
