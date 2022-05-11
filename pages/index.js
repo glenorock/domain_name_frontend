@@ -1,18 +1,10 @@
-import Head from 'next/head'
-import Header from '../components/header'
-import LogIn from './login'
+import Layout from '../components/layout/layout'
+import Home from '../components/pages/home'
 
-export default function Home() {
+export default function Index() {
   return (
-    <div className="container">
-      <Head>
-        <title>Antic</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      {
-        //<Header/>
-      }
-      <LogIn/>
-    </div>
+      <Layout>
+        <Home/>
+      </Layout>
   )
 }
