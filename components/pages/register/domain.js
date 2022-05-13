@@ -7,15 +7,16 @@ import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import Tooltip from '@mui/material/Tooltip';
 import TextField from '@mui/material/TextField';
 import { DataGrid} from '@mui/x-data-grid';
 import Modal from '@mui/material/Modal';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Button from '@mui/material/Button';
-const CountryCodes = require('../../../data/CountryCodes.json')
+import MenuItem from '@mui/material/MenuItem';
+
+import * as IO_DATA from './io_data';
+import * as Styles from '../styles'
+import { Tooltip } from '@mui/material';
 
 export default function DomainNameRegistrationForm(props){
     const [state,setState] = React.useState({
@@ -29,24 +30,12 @@ export default function DomainNameRegistrationForm(props){
         goal:"",
     })
     const [hostModalState,setHostModalState] = React.useState({
-        show:true,
+        show:false,
         name:"",
         ip:[],
         tmpVersion:"v4",
         tmpIp:""
     })
-
-    const ModalStyle = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-      };
 
     const handleChange = (prop) => (event) => {
         setState({...state,[prop]:event.target.value})
@@ -91,6 +80,7 @@ export default function DomainNameRegistrationForm(props){
                     InputProps={{
                         readOnly: true,
                     }}
+                    required
                     disabled
                     label="Domain name"
                 />
@@ -99,6 +89,7 @@ export default function DomainNameRegistrationForm(props){
                     value={state.period}
                     onChange={handleChange('period')}
                     fullWidth
+                    required
                     type="number"
                     label="Number of years"
                 />
@@ -107,6 +98,7 @@ export default function DomainNameRegistrationForm(props){
                     value={state.period * state.unitPrice}
                     onChange={handleChange('price')}
                     fullWidth
+                    required
                     type="number"
                     disabled
                     label="Total Cost"
@@ -117,6 +109,7 @@ export default function DomainNameRegistrationForm(props){
                     onChange={handleChange('goal')}
                     fullWidth
                     multiline
+                    required
                     label="Purpose/use of the domain name Cost"
                 />
             </Stack>
@@ -124,14 +117,30 @@ export default function DomainNameRegistrationForm(props){
     }
 
     // Page two starts here
-
+    
     const editHost = (host) => (event) => {
         setTimeout(() =>{
-            let tmp = state.hosts.filter((row) => row.id !== host.id)
-            tmp.push(host)
+            let hosts = state.hosts.filter((row) => row.name === host.name)
+            let addrs = []
+            hosts.forEach((ele) =>{
+                let tmp = {
+                    id:ele.id,
+                    addr:ele.addr,
+                    ver:ele.version,
+                }
+                addrs.push(tmp)
+            })
+            console.log(addrs)
+            setHostModalState({
+                show:true,
+                name:host.name,
+                ip:addrs,
+                tmpVersion:"v4",
+                tmpIp:""
+            })
             setState({
                 ...state,
-                hosts: tmp
+                hosts: state.hosts.filter((row) => row.name !== host.name)
             })
         })
     }
@@ -214,93 +223,20 @@ export default function DomainNameRegistrationForm(props){
         })
     }
 
-    const HostColumns = [
-        { field: 'name', headerName: 'Host name', flex: 1, },
-        { field: 'version', headerName: 'Version' ,flex: 0.5},
-        { field: 'addr', headerName: 'IP Address' ,flex: 1},
-        {
-            field: 'id',
-            headerName: '',
-            width:120, 
-            sortable:false,
-            renderCell: (params) => (
-                <Stack
-                    direction="row" 
-                    spacing={2}
-                >
-                    <Tooltip title="edit">
-                        <IconButton
-                            onClick={editHost(params.row)}
-                        >
-                            <EditIcon color="primary"/>
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="delete">
-                        <IconButton
-                            onClick={removeHost(params.row)}
-                        >
-                            <DeleteIcon color="error"/>
-                        </IconButton>
-                    </Tooltip>
-                </Stack>
-            ),
-            renderHeader: () => (
-                <Tooltip title="Add Host">
-                    <IconButton
-                        onClick={() =>{
-                            setHostModalState({
-                                ...hostModalState,
-                                show:true
-                            })
-                        }}
-                    >
-                        <AddCircleIcon color="primary"/>
-                    </IconButton>
-                </Tooltip>
-                
-              ) 
-        },
-    ]
-
-    const AddrColumns = [
-        { field: 'addr', headerName: 'IP Address' ,flex: 1},
-        { field: 'ver', headerName: 'Version' ,flex: 0.3},
-        {
-            field: 'id',
-            headerName: '',
-            width:120, 
-            sortable:false,
-            renderCell: (params) => (
-                <Stack
-                    direction="row" 
-                    spacing={2}
-                >
-                    <Tooltip title="edit">
-                        <IconButton
-                            onClick={editAddr(params.row)}
-                        >
-                            <EditIcon color="primary"/>
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="delete">
-                        <IconButton
-                            onClick={removeAddr(params.row)}
-                        >
-                            <DeleteIcon color="error"/>
-                        </IconButton>
-                    </Tooltip>
-                </Stack>
-            ),   
-        },
-    ]
-
+    const showHostModal = () =>{
+        setHostModalState({
+            ...hostModalState,
+            show:true
+        })
+    }
+    
     const pageTwo = () =>{
         return(
             <div style={{ height:400, width: '100%' }}>
                 <DataGrid
                     rowSpacingType="border"
                     rows={state.hosts}
-                    columns={HostColumns}
+                    columns={IO_DATA.HostColumns(editHost,removeHost,showHostModal)}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
                 />
@@ -310,7 +246,7 @@ export default function DomainNameRegistrationForm(props){
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Box sx={ModalStyle}>
+                    <Box sx={Styles.ModalStyle}>
                         <Stack
                             direction="column" 
                             spacing={2}
@@ -333,6 +269,7 @@ export default function DomainNameRegistrationForm(props){
                                 }}
                                 fullWidth
                                 label="name"
+                                required
                             />  
                             <Stack
                                 direction={(screen.width > 450 )?"row":"column"} 
@@ -348,8 +285,17 @@ export default function DomainNameRegistrationForm(props){
                                         })
                                     }}
                                     label="Version"
-                                    fullWidth={(screen.width < 450 )}
-                                />  
+                                    select
+                                    sx={{width:((screen.width < 450 )?"100%":"30%")}}
+                                >
+                                    {   
+                                        IO_DATA.IPVersions.map((option) =>(
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </MenuItem>
+                                        ))
+                                    }
+                                </TextField>  
                                 <TextField
                                     id="tmp-ip"
                                     value={hostModalState.tmpIp}
@@ -359,20 +305,25 @@ export default function DomainNameRegistrationForm(props){
                                             tmpIp:event.target.value
                                         })
                                     }}
+                                    sx={{width:((screen.width < 450 )?"100%":"50%")}}
                                     label="IP Address"
                                     fullWidth={(screen.width < 450 )}
+                                    required
                                 />
                                 <IconButton
+                                    sx={{width:((screen.width < 450 )?"100%":"10%")}}
                                     onClick={addAddr}
+                                    color="primary"
+                                    disabled={((hostModalState.name === "") || (hostModalState.tmpIp === "") || (hostModalState.tmpVersion === ""))?true:false}
                                 >
-                                    <AddCircleIcon color="primary"/>
+                                    <AddCircleIcon />
                                 </IconButton>
                             </Stack>
                             <div  style={{ height:300, width: '100%' }}>
                                 <DataGrid
                                     rowSpacingType="border"
                                     rows={hostModalState.ip}
-                                    columns={AddrColumns}
+                                    columns={IO_DATA.AddrColumns(editAddr,removeAddr)}
                                     pageSize={5}
                                     rowsPerPageOptions={[5]}
                                 />
@@ -380,22 +331,28 @@ export default function DomainNameRegistrationForm(props){
                             <Box sx={{ 
                                 mb: 2 ,
                                 display:'flex',
-                                justifyContent:"center",
+                                justifyContent:"flex-end",
                             }}>
-                                <Button
-                                    color="error"
-                                    variant="contained"
-                                    onClick={cancelAddHostModal}
-                                >
-                                    Cancel
-                                </Button>
-                                <Button
-                                    color="primary"
-                                    variant="contained"
-                                    onClick={addHost}
-                                >
-                                    Save
-                                </Button>
+                                <Box>
+                                    <Button
+                                        color="error"
+                                        variant="contained"
+                                        onClick={cancelAddHostModal}
+                                        width={100}
+                                        sx={{margin:"0px 5px"}}
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        color="primary"
+                                        variant="contained"
+                                        onClick={addHost}
+                                        sx={{margin:"0px 5px"}}
+                                        disabled={(hostModalState.ip.length === 0)?true:false}
+                                    >
+                                        Save
+                                    </Button>
+                                </Box>
                             </Box>
                         </Stack>
                     </Box>
@@ -404,10 +361,146 @@ export default function DomainNameRegistrationForm(props){
         )
     }
 
+    // Page 3 Starts here 
+
+    const [contactModalState,setContactModalSate] = React.useState({
+        //name:"",
+        //org:"",
+        addr:[],
+        city:"",
+        pc:"",
+        cc:"",
+        //tel:"",
+        fax:"",
+        //email:"",
+        //type:"",
+        show:true
+    })
+
+    const handleChangeContactModal = (props) => (event) =>{
+        setContactModalSate({
+            ...contactModalState,
+            [props]:event.target.value
+        })
+    }
+    
+    const closeContactModal = () =>{
+        setContactModalSate({
+            ...contactModalState,
+            show:false
+        })
+    }
+
+    const openContactModal = () =>{
+        setContactModalSate({
+            ...contactModalState,
+            show:true
+        })
+    }
+
+    const contactModal = () =>{
+        return(
+            <Modal
+                open={contactModalState.show}
+                onClose={closeContactModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={Styles.ModalStyle}>
+                    <Stack
+                        direction="column" 
+                        spacing={2}
+                        sx={{ 
+                            mb: 2 ,
+                            display:'flex',
+                            justifyContent:"center",
+                            padding: "3%",
+                            borderRadius:"10px",
+                        }}
+                    >
+                        <TextField
+                            id="contact_type"
+                            onChange={handleChangeContactModal("type")}
+                            fullWidth
+                            label="Role"
+                            required
+                            select
+                        >
+                            {
+                                IO_DATA.ContactTypes.map((option) =>(
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))
+                            }
+                        </TextField>
+                        <TextField
+                            id="contact_name"
+                            value={contactModalState.name}
+                            onChange={handleChangeContactModal("name")}
+                            fullWidth
+                            label="Full name"
+                            required
+                        />
+                        <TextField
+                            id="contact_org"
+                            value={contactModalState.org}
+                            onChange={handleChangeContactModal("org")}
+                            fullWidth
+                            label="Organisation"
+                            required
+                        />
+                        <TextField
+                            id="contact_email"
+                            value={contactModalState.email}
+                            onChange={handleChangeContactModal("email")}
+                            fullWidth
+                            type="email"
+                            label="Email"
+                            required
+                        />
+                        <TextField
+                            id="contact_tel"
+                            value={contactModalState.tel}
+                            onChange={handleChangeContactModal("tel")}
+                            fullWidth
+                            type="number"
+                            label="Telephone number"
+                            required
+                        />
+                        <TextField
+                            id="contact_cc"
+                            value={contactModalState.name}
+                            onChange={handleChangeContactModal("cc")}
+                            fullWidth
+                            label="full name"
+                            required
+                            select
+                        >
+                            {
+                                IO_DATA.CountryCodes.map(
+                                    (option) =>(
+                                        <MenuItem key={option.code} value={option.code}>
+                                            {option.name}
+                                        </MenuItem>
+                                    )
+                                )
+                            }
+                        </TextField>
+                            
+                    </Stack>
+                </Box>
+                        
+            </Modal>
+        )
+    }
+    
+
+
     const pageThree = () =>{
         return(
-            <div>
-                Page 3        
+            <div style={{ height:400, width: '100%' }}>
+                {contactModal()}       
             </div>
         )
     }
@@ -456,9 +549,12 @@ export default function DomainNameRegistrationForm(props){
                 justifyContent:"center",
             }}>
                 <IconButton 
-                    disabled={state.activeStep === 0}
                     onClick={handleBack}
-                    sx={{ mt: 1, mr: 1 }}
+                    sx={{ 
+                        mt: 1,
+                        mr: 1,
+                        visibility: (state.activeStep === 0)?"hidden":"visible", 
+                    }}
                     color="primary" 
                 >
                     <NavigateBeforeIcon/>
@@ -467,8 +563,11 @@ export default function DomainNameRegistrationForm(props){
                 <IconButton 
                     color="primary"
                     onClick={handleNext}
-                    sx={{ mt: 1, mr: 1 }}
-                    disabled={state.activeStep >= steps.length}
+                    sx={{ 
+                        mt: 1, 
+                        mr: 1,
+                        visibility: (state.activeStep >= steps.length)?"hidden":"visible", 
+                    }}
                 >
                     {state.activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                     <NavigateNextIcon/>
@@ -491,5 +590,5 @@ export default function DomainNameRegistrationForm(props){
                 {displayStepNavigation()}
             </Stack>
         </Box>
-      );
+    );
 }
