@@ -13,10 +13,14 @@ import Modal from '@mui/material/Modal';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import Autocomplete from '@mui/material/Autocomplete';
 
 import * as IO_DATA from './io_data';
 import * as Styles from '../styles'
-import { Tooltip } from '@mui/material';
 
 export default function DomainNameRegistrationForm(props){
     const [state,setState] = React.useState({
@@ -28,6 +32,8 @@ export default function DomainNameRegistrationForm(props){
         contacts:[],
         hosts:[],
         goal:"",
+        password:"",
+        showPassword:false
     })
     const [hostModalState,setHostModalState] = React.useState({
         show:false,
@@ -54,6 +60,13 @@ export default function DomainNameRegistrationForm(props){
             activeStep: state.activeStep - 1
         })
     };
+
+    const togglePasswordVisibility = () =>{
+        setState({
+            ...state,
+            showPassword:!state.showPassword
+        })
+    }
 
     // Page One Starts Here
     
@@ -83,6 +96,7 @@ export default function DomainNameRegistrationForm(props){
                     required
                     disabled
                     label="Domain name"
+                    placeholder='Domain name'
                 />
                 <TextField
                     id="period"
@@ -92,6 +106,7 @@ export default function DomainNameRegistrationForm(props){
                     required
                     type="number"
                     label="Number of years"
+                    placeholder='Number of years'
                 />
                 <TextField
                     id="price"
@@ -102,6 +117,30 @@ export default function DomainNameRegistrationForm(props){
                     type="number"
                     disabled
                     label="Total Cost"
+                    placeholder='Total Cost'
+                />
+                <OutlinedInput
+                    id="password"
+                    type={state.showPassword?"text":"password"}
+                    value={state.password}
+                    onChange={handleChange('password')}
+                    fullWidth
+                    label="password"
+                    placeholder='password'
+                    notched
+                    endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                                aria-label="search button"
+                                onClick={togglePasswordVisibility}
+                                edge="end"
+                            >
+                                {
+                                    state.showPassword?(<VisibilityOffIcon/>):(<VisibilityIcon/>)
+                                }
+                            </IconButton>
+                        </InputAdornment>
+                    }
                 />
                 <TextField
                     id="goal"
@@ -110,6 +149,7 @@ export default function DomainNameRegistrationForm(props){
                     fullWidth
                     multiline
                     required
+                    minRows={4}
                     label="Purpose/use of the domain name Cost"
                 />
             </Stack>
@@ -224,9 +264,11 @@ export default function DomainNameRegistrationForm(props){
     }
 
     const showHostModal = () =>{
-        setHostModalState({
-            ...hostModalState,
-            show:true
+        setTimeout(() =>{
+            setHostModalState({
+                ...hostModalState,
+                show:true
+            })
         })
     }
     
@@ -240,7 +282,7 @@ export default function DomainNameRegistrationForm(props){
                     pageSize={5}
                     rowsPerPageOptions={[5]}
                 />
-                 <Modal
+                <Modal
                     open={hostModalState.show}
                     onClose={cancelAddHostModal}
                     aria-labelledby="modal-modal-title"
@@ -364,16 +406,16 @@ export default function DomainNameRegistrationForm(props){
     // Page 3 Starts here 
 
     const [contactModalState,setContactModalSate] = React.useState({
-        //name:"",
-        //org:"",
-        addr:[],
+        name:"",
+        org:"",
+        addr:"",
         city:"",
         pc:"",
         cc:"",
-        //tel:"",
+        tel:"",
         fax:"",
-        //email:"",
-        //type:"",
+        email:"",
+        type:"",
         show:true
     })
 
@@ -385,24 +427,61 @@ export default function DomainNameRegistrationForm(props){
     }
     
     const closeContactModal = () =>{
-        setContactModalSate({
-            ...contactModalState,
-            show:false
+        setTimeout(() =>{
+            setContactModalSate({
+                ...contactModalState,
+                name:"",
+                org:"",
+                addr:"",
+                city:"",
+                pc:"",
+                cc:"",
+                tel:"",
+                fax:"",
+                email:"",
+                type:"",
+                show:false
+            })
         })
     }
 
     const openContactModal = () =>{
-        setContactModalSate({
-            ...contactModalState,
-            show:true
+        setTimeout(() =>{
+            setContactModalSate({
+                ...contactModalState,
+                show:true
+            })
         })
+    }
+
+    const addContact = () =>{
+        let contact = {
+            id:Date.now(),
+            name:contactModalState.name,
+            org:contactModalState.org,
+            addr:contactModalState.addr,
+            city:contactModalState.city,
+            pc:contactModalState.pc,
+            cc:contactModalState.cc,
+            tel:contactModalState.tel,
+            fax:contactModalState.fax,
+            email:contactModalState.email,
+            type:contactModalState.type
+        }
+        let tmp= [contact].concat(state.contacts)
+        setTimeout(() =>{
+            setState({
+                ...state,
+                contacts:tmp
+            })
+        })
+        closeContactModal()
     }
 
     const contactModal = () =>{
         return(
             <Modal
                 open={contactModalState.show}
-                onClose={closeContactModal}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
@@ -420,6 +499,7 @@ export default function DomainNameRegistrationForm(props){
                     >
                         <TextField
                             id="contact_type"
+                            value={contactModalState.type}
                             onChange={handleChangeContactModal("type")}
                             fullWidth
                             label="Role"
@@ -468,48 +548,162 @@ export default function DomainNameRegistrationForm(props){
                             label="Telephone number"
                             required
                         />
-                        <TextField
+                        <Autocomplete
                             id="contact_cc"
-                            value={contactModalState.name}
-                            onChange={handleChangeContactModal("cc")}
+                            options={IO_DATA.CountryCodes}
+                            autoHighlight
+                            onChange={(event,value,reason) =>{
+                                setContactModalSate({
+                                    ...contactModalState,
+                                    cc:value?value.code:""
+                                })
+                            }}
+                            inputValue={contactModalState.cc}
+                            getOptionLabel={(option) => option.code}
+                            renderOption={(props, option) => (
+                                <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                                <img
+                                    loading="lazy"
+                                    width="20"
+                                    src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                                    srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                                    alt=""
+                                />
+                                {option.name} ({option.code}) ({option.dial_code})
+                                </Box>
+                            )}
+                            renderInput={(params) => (
+                                <TextField
+                                {...params}
+                                required
+                                // value={contactModalState.cc}
+                                label="Country"
+                                inputProps={{
+                                    ...params.inputProps,
+                                    autoComplete: 'new-password', // disable autocomplete and autofill
+                                }}
+                                />
+                            )}
+                        />
+                        <TextField
+                            id="contact_city"
+                            value={contactModalState.city}
+                            onChange={handleChangeContactModal("city")}
                             fullWidth
-                            label="full name"
-                            required
-                            select
-                        >
-                            {
-                                IO_DATA.CountryCodes.map(
-                                    (option) =>(
-                                        <MenuItem key={option.code} value={option.code}>
-                                            {option.name}
-                                        </MenuItem>
-                                    )
-                                )
-                            }
-                        </TextField>
-                            
+                            label="City"
+                        />
+                        <TextField
+                            id="contact_addr"
+                            value={contactModalState.addr}
+                            onChange={handleChangeContactModal("addr")}
+                            fullWidth
+                            label="Street address"
+                        />
+                        <TextField
+                            id="contact_pc"
+                            value={contactModalState.pc}
+                            onChange={handleChangeContactModal("pc")}
+                            fullWidth
+                            label="Postal Code"
+                        />
+                        <TextField
+                            id="contact_fax"
+                            value={contactModalState.fax}
+                            onChange={handleChangeContactModal("fax")}
+                            fullWidth
+                            label="Fax"
+                        />
+                        <Box sx={{ 
+                            mb: 2 ,
+                            display:'flex',
+                            justifyContent:"flex-end",
+                        }}>
+                            <Box>
+                                <Button
+                                    color="error"
+                                    variant="contained"
+                                    onClick={closeContactModal}
+                                    width={100}
+                                    sx={{margin:"0px 5px"}}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    color="primary"
+                                    variant="contained"
+                                    onClick={addContact}
+                                    sx={{margin:"0px 5px"}}
+                                >
+                                    Save
+                                </Button>
+                            </Box>
+                        </Box>
                     </Stack>
+                        
                 </Box>
                         
             </Modal>
         )
     }
-    
 
+    const editContact = (row) => (event) =>{
+        setTimeout(() =>{
+            setContactModalSate({
+                ...contactModalState,
+                name:row.name,
+                org:row.org,
+                addr:row.addr,
+                city:row.city,
+                pc:row.pc,
+                cc:row.cc,
+                tel:row.tel,
+                fax:row.fax,
+                email:row.email,
+                type:row.type,
+                show:true
+            })
+        })
+        removeContact(row)(event)
+    }
+    
+    const removeContact = (row) => (event) =>{
+        setTimeout(() =>{
+            setState({
+                ...state,
+                contacts:state.contacts.filter((data) => data.id !== row.id )
+            })  
+        })
+    }
 
     const pageThree = () =>{
         return(
             <div style={{ height:400, width: '100%' }}>
+                <DataGrid
+                    rowSpacingType="border"
+                    rows={state.contacts}
+                    columns={IO_DATA.ContactColumns(openContactModal,editContact,removeContact)}
+                    pageSize={5}
+                    rowsPerPageOptions={[5]}
+                />
                 {contactModal()}       
             </div>
         )
     }
 
+    // Page four starts here
+
+    const [payState,setPayState] = React.useState({
+        number:"",
+        status:0
+    })
     const pageFour  = () =>{
         return(
-            <div>
-                Page 4        
-            </div>
+            <Stack
+                direction="column"
+                spacing={2}
+            >
+                
+            </Stack>
         )
     }
 

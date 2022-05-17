@@ -119,6 +119,53 @@ export const ContactTypes = [
     },
 ]
 
-export const ContactColumns = (addContact) =>{
-
+export const ContactColumns = (addContact,editContact,removeContact) =>{
+    return [
+        { field: 'type', headerName: 'Role', flex: 1, minWidth:150},
+        { field: 'name', headerName: 'Full name', flex: 1, minWidth:150},
+        { field: 'email', headerName: 'Email', flex: 1, minWidth:150},
+        { field: 'cc', headerName: 'Country Code', flex: 1, minWidth:150},
+        { field: 'city', headerName: 'City', flex: 1, minWidth:150},
+        { field: 'tel', headerName: 'Telephone', flex: 1, minWidth:150},
+        { field: 'org', headerName: 'Organisation', flex: 1, minWidth:150},
+        { field: 'addr', headerName: 'Address', flex: 1, minWidth:150},
+        { field: 'pc', headerName: 'Postal Code', flex: 1, minWidth:150},
+        { field: 'fax', headerName: 'Fax', flex: 1, minWidth:150},
+        { 
+            field: 'id',
+            headerName: '',
+            width:120, 
+            sortable:false,
+            renderCell: (params) => (
+                <Stack
+                    direction="row" 
+                    spacing={2}
+                >
+                    <Tooltip title="edit">
+                        <IconButton
+                            onClick={editContact(params.row)}
+                        >
+                            <EditIcon color="primary"/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="delete">
+                        <IconButton
+                            onClick={removeContact(params.row)}
+                        >
+                            <DeleteIcon color="error"/>
+                        </IconButton>
+                    </Tooltip>
+                </Stack>
+            ),
+            renderHeader: () => (
+                <Tooltip title="Add Host">
+                    <IconButton
+                        onClick={addContact}
+                    >
+                        <AddCircleIcon color="primary"/>
+                    </IconButton>
+                </Tooltip>
+            )
+        },
+    ]
 }
