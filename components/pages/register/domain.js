@@ -21,6 +21,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 import * as IO_DATA from './io_data';
 import * as Styles from '../styles'
+import * as URLS from '../urls'
 
 export default function DomainNameRegistrationForm(props){
     const [state,setState] = React.useState({
@@ -33,7 +34,7 @@ export default function DomainNameRegistrationForm(props){
         hosts:[],
         goal:"",
         password:"",
-        showPassword:false
+        showPassword:false,
     })
     const [hostModalState,setHostModalState] = React.useState({
         show:false,
@@ -97,27 +98,6 @@ export default function DomainNameRegistrationForm(props){
                     disabled
                     label="Domain name"
                     placeholder='Domain name'
-                />
-                <TextField
-                    id="period"
-                    value={state.period}
-                    onChange={handleChange('period')}
-                    fullWidth
-                    required
-                    type="number"
-                    label="Number of years"
-                    placeholder='Number of years'
-                />
-                <TextField
-                    id="price"
-                    value={state.period * state.unitPrice}
-                    onChange={handleChange('price')}
-                    fullWidth
-                    required
-                    type="number"
-                    disabled
-                    label="Total Cost"
-                    placeholder='Total Cost'
                 />
                 <OutlinedInput
                     id="password"
@@ -694,14 +674,101 @@ export default function DomainNameRegistrationForm(props){
 
     const [payState,setPayState] = React.useState({
         number:"",
+        method:"",
         status:0
     })
+
+    const payerIcon = () =>{
+        let number = payState.number
+        let mtnReg =RegExp(/^6(5[0-4]|7\d|8)\d+$/)
+        let orangeReg =RegExp(/^6(9|5[5-9])\d+$/)
+        let operator = ""
+        let rend = ""
+        if(mtnReg.test(number)){
+            operator = "MOMO"
+            rend = (
+                <img
+                    loading="lazy"
+                    width="50"
+                    src={URLS.MomoLogo}
+                    alt=""
+                />
+            )
+        }else if(orangeReg.test(number)){
+            operator="OM"
+            rend = (
+                <img
+                    loading="lazy"
+                    width="50"
+                    src={URLS.OMLogo}
+                    alt=""
+                />
+            )
+        }else{
+            operator=""
+            rend =  (<div></div>)
+        }
+        return rend  
+    }
+
+    const getOperator = (number) =>{
+        let mtnReg =RegExp(/^6(5[0-4]|7\d|8)\d+$/)
+        let orangeReg =RegExp(/^6(9|5[5-9])\d+$/)
+        if(mtnReg.test(number)){
+            return "MOMO"
+        }else if(orangeReg.test(number)){
+            return "OM"
+        }else{
+            return ""    
+        }
+    }
+
     const pageFour  = () =>{
         return(
             <Stack
                 direction="column"
                 spacing={2}
             >
+                <TextField
+                    id="period"
+                    value={state.period}
+                    onChange={handleChange('period')}
+                    fullWidth
+                    required
+                    type="number"
+                    label="Number of years"
+                    placeholder='Number of years'
+                />
+                <TextField
+                    id="price"
+                    value={state.period * state.unitPrice}
+                    onChange={handleChange('price')}
+                    fullWidth
+                    required
+                    type="number"
+                    disabled
+                    label="Total Cost"
+                    placeholder='Total Cost'
+                />
+                <OutlinedInput
+                    id="payer"
+                    type="number"
+                    value={payState.number}
+                    onChange={(event) =>{
+                        
+                        setPayState({
+                            ...payState,
+                            method:getOperator(event.target.value),
+                            number:event.target.value
+                        })
+                    }}
+                    fullWidth
+                    label="Payer"
+                    placeholder="Payer's number "
+                    endAdornment={
+                        payerIcon()
+                    }
+                />
                 
             </Stack>
         )
