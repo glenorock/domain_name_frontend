@@ -1,10 +1,9 @@
-import Layout from '../components/layout/layout'
-import Home from '../components/pages/home'
+import Page from '../components/page';
 
 export default function Index() {
   return (
-      <Layout>
-        <Home/>
-      </Layout>
+      <Page>
+        This is a child
+      </Page>
   )
 }

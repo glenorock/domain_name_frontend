@@ -19,6 +19,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Autocomplete from '@mui/material/Autocomplete';
 
+import * as MO from '../../../lib/mobileOperator';
 import * as IO_DATA from './io_data';
 import * as Styles from '../styles'
 import * as URLS from '../urls'
@@ -37,7 +38,7 @@ export default function DomainNameRegistrationForm(props){
         showPassword:false,
     })
     const [hostModalState,setHostModalState] = React.useState({
-        show:false,
+        show:true,
         name:"",
         ip:[],
         tmpVersion:"v4",
@@ -672,12 +673,20 @@ export default function DomainNameRegistrationForm(props){
 
     // Page four starts here
 
+    const paymentStatus = {
+        "RESTING":0,
+        "PENDING":1,
+        "SUCCESS":2,
+        "REJECTED":-1,
+    }
+
     const [payState,setPayState] = React.useState({
         number:"",
         method:"",
-        status:0
+        status:paymentStatus.RESTING,
     })
 
+    
     const payerIcon = () =>{
         let number = payState.number
         let mtnReg =RegExp(/^6(5[0-4]|7\d|8)\d+$/)
@@ -711,17 +720,7 @@ export default function DomainNameRegistrationForm(props){
         return rend  
     }
 
-    const getOperator = (number) =>{
-        let mtnReg =RegExp(/^6(5[0-4]|7\d|8)\d+$/)
-        let orangeReg =RegExp(/^6(9|5[5-9])\d+$/)
-        if(mtnReg.test(number)){
-            return "MOMO"
-        }else if(orangeReg.test(number)){
-            return "OM"
-        }else{
-            return ""    
-        }
-    }
+    
 
     const pageFour  = () =>{
         return(
@@ -773,6 +772,12 @@ export default function DomainNameRegistrationForm(props){
             </Stack>
         )
     }
+
+    // This page is provided once the form is completely filled.
+    const [requestState,setRequestState] = React.useState({
+        payStatus : "pending",
+        hasPaid: "",
+    });
 
     const finishedPage = () =>{
         return(<div>
