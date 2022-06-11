@@ -33,7 +33,7 @@ const LanguageSwitch = () => {
   return (
     <div>
       <Dropdown>
-        <Dropdown.Toggle className="bttn-small btn-blue btn-lang" variant="link">
+        <Dropdown.Toggle className=" btn-small btn-primary" variant="link">
           {selectedLang?.label}
         </Dropdown.Toggle>
         <Dropdown.Menu>

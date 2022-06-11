@@ -74,66 +74,68 @@ export default function DomainNameRegistrationForm(props){
     
     const pageOne = () =>{
         return(
-            <Stack 
-                direction="column" 
-                spacing={2}
-                sx={{ 
-                    mb: 2 ,
-                    display:'flex',
-                    justifyContent:"center",
-                    padding: "3%",
-                    border:"solid 1px grey",
-                    borderRadius:"10px",
-                }}
-            >   
-                <TextField
-                    id="domain"
-                    value={state.domain}
-                    onChange={handleChange('domain')}
-                    fullWidth
-                    defaultValue={state.domain}
-                    InputProps={{
-                        readOnly: true,
+            <div style={{ height:400, width: '100%' }}>
+                <Stack 
+                    direction="column" 
+                    spacing={2}
+                    sx={{ 
+                        mb: 2 ,
+                        display:'flex',
+                        justifyContent:"center",
+                        padding: "3%",
+                        border:"solid 1px grey",
+                        borderRadius:"10px",
                     }}
-                    required
-                    disabled
-                    label="Domain name"
-                    placeholder='Domain name'
-                />
-                <OutlinedInput
-                    id="password"
-                    type={state.showPassword?"text":"password"}
-                    value={state.password}
-                    onChange={handleChange('password')}
-                    fullWidth
-                    label="password"
-                    placeholder='password'
-                    notched
-                    endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton
-                                aria-label="search button"
-                                onClick={togglePasswordVisibility}
-                                edge="end"
-                            >
-                                {
-                                    state.showPassword?(<VisibilityOffIcon/>):(<VisibilityIcon/>)
-                                }
-                            </IconButton>
-                        </InputAdornment>
-                    }
-                />
-                <TextField
-                    id="goal"
-                    value={state.goal}
-                    onChange={handleChange('goal')}
-                    fullWidth
-                    multiline
-                    required
-                    minRows={4}
-                    label="Purpose/use of the domain name Cost"
-                />
-            </Stack>
+                >   
+                    <TextField
+                        id="domain"
+                        value={state.domain}
+                        onChange={handleChange('domain')}
+                        fullWidth
+                        defaultValue={state.domain}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        required
+                        disabled
+                        label="Domain name"
+                        placeholder='Domain name'
+                    />
+                    <OutlinedInput
+                        id="password"
+                        type={state.showPassword?"text":"password"}
+                        value={state.password}
+                        onChange={handleChange('password')}
+                        fullWidth
+                        label="password"
+                        placeholder='password'
+                        notched
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="search button"
+                                    onClick={togglePasswordVisibility}
+                                    edge="end"
+                                >
+                                    {
+                                        state.showPassword?(<VisibilityOffIcon/>):(<VisibilityIcon/>)
+                                    }
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                    <TextField
+                        id="goal"
+                        value={state.goal}
+                        onChange={handleChange('goal')}
+                        fullWidth
+                        multiline
+                        required
+                        minRows={4}
+                        label="Purpose/use of the domain name Cost"
+                    />
+                </Stack>
+            </div>
         )
     }
 
@@ -724,9 +726,11 @@ export default function DomainNameRegistrationForm(props){
 
     const pageFour  = () =>{
         return(
-            <Stack
+            <div style={{ height:400, width: '100%' }}>
+                    <Stack
                 direction="column"
                 spacing={2}
+                
             >
                 <TextField
                     id="period"
@@ -770,6 +774,8 @@ export default function DomainNameRegistrationForm(props){
                 />
                 
             </Stack>
+        
+            </div>    
         )
     }
 
@@ -780,9 +786,11 @@ export default function DomainNameRegistrationForm(props){
     });
 
     const finishedPage = () =>{
-        return(<div>
-            finished
-        </div>)
+        return(
+            <div style={{ height:400, width: '100%' }}>
+                Finished
+            </div>
+        )
     }
 
     const displayContent = () =>{

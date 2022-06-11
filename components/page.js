@@ -9,7 +9,9 @@ const Page = ({children}) =>{
             </head>
             <body>
                 <Header />
-                {children}
+                <div className='site-body'>
+                    {children}
+                </div>
                 <Footer />
             </body>
         </>
