@@ -1,12 +1,13 @@
 import LanguageSwitch from "./LanguageSwitch";
 import Image from 'next/image'
+import Logo from '../../images/logo.png';
 
 const Header = (props) => {
     return(
         <div className="site-header">
             <div className="brand-logo">
                 <Image
-                    src="/images/logo.jpg"
+                    src={Logo}
                     alt="logo"
                     width={50}
                     height={50}

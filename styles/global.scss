@@ -10,47 +10,43 @@
 // utililty
 @import "utility";
 
-
-
 // Site Header
 
-.site-header{
-    padding: 5px 20px;
-    position:fixed;
-    top: 0;
-    display: flex;
-    width: 100%;
-    height: 50px;
-    z-index: 2;
-    transition: all 0.3s ease-in;
-    background: $primarybg;
-    @media (max-width: 767px) {
-      left: 0;
-    }
-    .brand-logo {
-    //   display: none;
-      @media (max-width: 767px) {
-        display: block;
-      }
-      img {
-        width: 50px;
-      }
-    }
-    
+.site-header {
+  padding: 5px 20px;
+  position: fixed;
+  top: 0;
+  display: flex;
+  width: 100%;
+  height: 50px;
+  z-index: 2;
+  transition: all 0.3s ease-in;
+  background: $primarybg;
+  @media (max-width: 767px) {
+    left: 0;
   }
+  .brand-logo {
+    //   display: none;
+    @media (max-width: 767px) {
+      display: block;
+    }
+    img {
+      width: 50px;
+    }
+  }
+}
 
-.title-header{
-    text-align: center;
-    width: 100%;
-    color: $white;
+.title-header {
+  text-align: center;
+  width: 100%;
+  color: $white;
 }
 .lng-switch-cont {
-    display: flex;
-    justify-content: flex-end;
-    
+  display: flex;
+  justify-content: flex-end;
 }
 
-.site-footer{
+.site-footer {
   padding: 5px 20px;
   width: 100%;
   text-align: center;
@@ -58,9 +54,74 @@
   color: $white;
 }
 
-.site-body{
+.site-body {
   margin: 0px;
   margin-top: 50px;
   padding: 2% 10%;
   border: solid 5px $secondarybg;
+}
+
+// side-bar
+.active {
+  background-color: $secondarybg;
+  color: $secondaryColor;
+    &:hover {
+      box-shadow: -1px 1px $primarybg2, -2px 2px $secondarybg, -3px 3px $secondarybg, -4px 4px $secondarybg,
+      -5px 5px $secondarybg;  
+    }
+}
+
+.inactive {
+  background-color: $primarybg;
+  color: $primaryColor;
+  &:hover {
+    box-shadow: -1px 1px $primarybg2, -2px 2px $primarybg, -3px 3px $primarybg, -4px 4px $primarybg, -5px 5px $primarybg;
+  }
+}
+
+.sidebar {
+  background-color: $primarybg2;
+  padding: 10px 0px;
+  font-size: large;
+  padding-top: 25px;
+}
+
+.sidebar .brand-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.sidebar .brand-logo .logo {
+  width: 50%;
+}
+
+.sidebar li {
+  padding: 10px 0px;
+  padding-left: 10%;
+  margin: 15px 0px;
+  margin-left: 10%;
+  border-radius: 50px 0px 0px 50px;
+  border: 1px solid $primarybg2;
+  transition: box-shadow 0.5s;
+}
+
+.sidebar span {
+  margin-left: 5px;
+}
+
+// admin-page
+.admin-page {
+  width: 100%;
+  display: flex;
+  min-height: 100vh;
+}
+
+.admin-page .left {
+  border: palegreen solid 5px;
+  width: 85%;
+}
+
+.admin-page .sidebar {
+  width: 15%;
 }
