@@ -12,7 +12,7 @@ const Page = ({children}) => {
                     <Sidebar/>    
                     <div className="left">
                         <HeaderAdmin/>
-                        <div className='admin-body'>
+                        <div className='admin-body stack'>
                             {children}
                         </div>
                     </div>

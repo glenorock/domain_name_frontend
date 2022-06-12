@@ -9,11 +9,13 @@ const LanguageSwitch = () => {
   const languages = [
     {
       code: 'en',
-      label: 'English'
+      label: 'English',
+      icon:''
     },
     {
       code: 'fr',
-      label: 'Français'
+      label: 'Français',
+      icon: '',
     },
   ];
 
@@ -33,12 +35,27 @@ const LanguageSwitch = () => {
   return (
     <div>
       <Dropdown>
-        <Dropdown.Toggle className=" btn-small btn-primary" variant="link">
+        <Dropdown.Toggle className=" btn" variant="link">
+          <img
+            loading="lazy"
+            width="20"
+            src={`https://flagcdn.com/w20/${(selectedLang?.code.toLowerCase() === "en")?"gb":selectedLang?.code.toLowerCase()}.png`}
+            srcSet={`https://flagcdn.com/w40/${(selectedLang?.code.toLowerCase() === "en")?"gb":selectedLang?.code.toLowerCase()}.png 2x`}
+            alt=""
+          />
           {selectedLang?.label}
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {languages.map((lng) => (
             <Dropdown.Item key={lng?.code} onClick={() => setLang(lng)}>
+              <img
+                loading="lazy"
+                width="20"
+                src={`https://flagcdn.com/w20/${(lng?.code.toLowerCase() === "en")?"gb":lng?.code.toLowerCase()}.png`}
+                srcSet={`https://flagcdn.com/w40/${(lng?.code.toLowerCase() === "en")?"gb":lng?.code.toLowerCase()}.png 2x`}
+                alt=""
+              />
+              <span>    </span>                 
               {lng?.label}
             </Dropdown.Item>
           ))}

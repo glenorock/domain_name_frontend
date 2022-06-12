@@ -20,53 +20,9 @@ $grey: #585858;
 $siteFont: "Jost", sans-serif;
 $headdingFont: "Open Sans", sans-serif;
 
-$primarygradient: linear-gradient(to right, $red 0%, $yellow 100%);
+$primarygradient: linear-gradient(to right, $primarybg 0%,$primarybg2 50%, $secondarybg 100%);
 $bluegradient: linear-gradient(to right, $blue 100%, $blue2 100%);
 $bluegradient2: linear-gradient(top, #009efd, #2af598);
-
-.cl-primary {
-    color: $primary;
-}
-
-.cl-blue {
-    color: $blue;
-}
-
-.cl-green {
-    color: $green;
-}
-
-.cl-black {
-    color: $black;
-}
-
-.cl-red {
-    color: $red;
-}
-
-.bg-primary {
-    background: $primary;
-}
-
-.bg-blue {
-    background: $blue;
-}
-
-.bg-green {
-    background: $green;
-}
-
-.bg-black {
-    background: $black;
-}
-
-.bg-black2 {
-    background: $black2;
-}
-
-.bg-red {
-    background: $red;
-}
 
 * {
     margin: 0;
@@ -141,331 +97,65 @@ img {
     -o-user-drag: none;
 }
 
-/*** 
-
-=======================
-    Margin and Padding
-=======================
-
-***/
-/* 
-    Margin Top styles
-*/
-.mar-0 {
-    margin: 0;
-}
-
-.mt-10 {
-    margin-top: 10px;
-}
-
-.mt-20 {
-    margin-top: 20px;
-}
-
-.mt-30 {
-    margin-top: 30px;
-}
-
-.mt-40 {
-    margin-top: 40px;
-}
-
-.mt-50 {
-    margin-top: 50px;
-}
-
-.mt-60 {
-    margin-top: 60px;
-}
-
-/* 
-  Margin Bottom Styles
-*/
-.mb-10 {
-    margin-bottom: 10px;
-}
-
-.mb-20 {
-    margin-bottom: 20px;
-}
-
-.mb-30 {
-    margin-bottom: 30px;
-}
-
-.mb-40 {
-    margin-bottom: 40px;
-}
-
-.mb-50 {
-    margin-bottom: 50px;
-}
-
-.mb-60 {
-    margin-bottom: 60px;
-}
-
-/* 
-  Margin Right Styles
-*/
-.mr-10 {
-    margin-right: 10px;
-}
-
-.mr-20 {
-    margin-right: 20px;
-}
-
-.mr-30 {
-    margin-right: 30px;
-}
-
-.mr-40 {
-    margin-right: 40px;
-}
-
-.mr-50 {
-    margin-right: 50px;
-}
-
-.mr-60 {
-    margin-right: 60px;
-}
-
-/* 
-  Padding Top Styles
-*/
-.pad-0 {
-    padding: 0;
-}
-
-.pt-10 {
-    padding-top: 10px;
-}
-
-.pt-20 {
-    padding-top: 20px;
-}
-
-.pt-30 {
-    padding-top: 30px;
-}
-
-.pt-40 {
-    padding-top: 40px;
-}
-
-.pt-50 {
-    padding-top: 50px;
-}
-
-.pt-60 {
-    padding-top: 60px;
-}
-
-/* 
-  Padding Bottom Styles
-*/
-.pb-10 {
-    padding-bottom: 10px;
-}
-
-.pb-20 {
-    padding-bottom: 20px;
-}
-
-.pb-30 {
-    padding-bottom: 30px;
-}
-
-.pb-40 {
-    padding-bottom: 40px;
-}
-
-.pb-50 {
-    padding-bottom: 50px;
-}
-
-.pb-60 {
-    padding-bottom: 60px;
-}
-
-.ml-auto {
-    margin-left: auto;
-}
-
-.ml-10 {
-    margin-left: 10px;
-}
-.ml-20 {
-    margin-left: 20px;
-}
-.mr-10 {
-    margin-right: 10px;
-}
-.mr-20 {
-    margin-right: 20px;
-}
-
-.centered {
-    text-align: center;
-}
-
-.text-right {
-    text-align: right;
-}
-
-.container-fluid {
-    padding: 0 50px;
-    @media (max-width: 450px) {
-        padding: 0 15px;
-    }
-}
 
 /* Buttons Css */
-
-.bttn-mid {
-    position: relative;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 14px 30px;
-    display: inline-block;
-    cursor: pointer;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    border-radius: 5px;
-    svg {
-        margin-right: 5px;
-        font-size: 16px;
-        position: relative;
-        top: -2px;
-    }
-}
-
-.btn-small {
+.btn {
     position: relative;
     font-size: 14px;
     font-weight: 600;
-    padding: 10px 25px;
-    display: inline-block;
+    height: 40px ;
+    padding: 0px 15px;
     cursor: pointer;
     transition: 0.4s;
     border-radius: 5px;
+    width: fit-content;
     svg {
         margin-right: 5px;
         font-size: 16px;
         position: relative;
-        top: -2px;
     }
-}
-
-.btn-fill {
-    background: $white;
-    color: $primary;
-    &:hover {
-        color: $white;
-        box-shadow: 0 8px 8px rgba($black, $alpha: 0.05);
-        background: $primary;
+    img {
+        margin-right: 5px;
+        font-size: 16px;
+        position: relative;
     }
-}
-
-.bttn-mid.btn-emt {
-    padding: 12px 41px;
-}
-
-.btn-emt {
-    background: transparent;
-    color: #ffffff;
-    border: 2px solid #ffffff;
-    box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.05);
-}
-
-.btn-emt:hover {
-    color: $black;
-    box-shadow: none;
-    background: $yellow;
-    border: 2px solid transparent;
-}
-
-.btn-wht {
-    background: #ffffff;
-    color: $primary;
-    box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.05);
-}
-
-.btn-wht:hover {
-    background: $primary;
-    color: #ffffff;
-}
-
-.btn-primary {
     background: $primarybg;
-    color: $white;
-    border: solid $secondarybg 1px;
-    box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.05);
+    color: $primaryColor;
     &:hover {
         background: $secondarybg;
+        color: $secondaryColor;
+    }
+    display: flex;
+    align-items: center;
+}
+
+ .v-center {
+    display: flex;
+    align-items: center;
+ }
+
+ .h-center {
+     display: flex;
+     justify-content: center;
+ }
+
+.raised {
+    box-shadow: 1px -1px 2px 1px #C0C0C0,-1px 1px 2px 1px #C0C0C0;
+}
+
+.stack {
+    & > *{
+        margin: 15px 0px;
     }
 }
 
-.btn-blue {
-    background: $blue;
-    color: $white;
-    box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.05);
-    &:hover {
-        background: $yellow;
-        color: rgba($black, $alpha: 0.9);
-    }
+.left-align{
+    display: flex;
+    justify-content:flex-end;
 }
 
-.btn-ylo {
-    background: $yellow;
-    color: $blue2;
-    box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.05);
-    &:hover {
-        background: $blue;
-        color: rgba($white, $alpha: 0.9);
-    }
-}
-
-.btn-grey {
-    background: $grey;
-    color: $white;
-    box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.05);
-    &:hover {
-        background: $blue;
-        color: rgba($white, $alpha: 0.9);
-    }
-}
-
-.btn-gdnt {
-    background: $bluegradient;
-    color: $white;
-    box-shadow: 0px 0px 16px 4px rgba(0, 0, 0, 0.05);
-    &:hover {
-        background-image: linear-gradient(to right, #ff6a00 0%, #ee0979 100%);
-        color: $white;
-    }
-}
-
-.btn-grad {
-    background-image: linear-gradient(to left, #ff6a00 0%, #ee0979 100%);
-    color: $white;
-    &:hover {
-        background-image: linear-gradient(to right, #ff6a00 0%, #ee0979 100%);
-        color: $white;
-    }
-}
-
-/* Margins and Paddings */
-.mb-80 {
-    margin-bottom: 80px;
-}
-
-.section-padding {
-    padding: 80px 0;
-}
-.section-padding-2 {
-    padding: 80px 0 50px 0;
+.box{
+    box-shadow: 1px -1px 2px 1px #C0C0C0,-1px 1px 2px 1px #C0C0C0;
+    padding: 5px 15px;
+    border-radius: 7px;
 }
