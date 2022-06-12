@@ -4,8 +4,16 @@ import HostList from '../../components/lists/hostList';
 const Host = () => {
   return (
       <Page>
-        <HostList/>
+        <div className='left-align box'>
+          <div className='btn '>
+            Action Panes
+          </div>
+        </div>
+        <div className='box'>
+            <HostList/>
+        </div>
       </Page>
+      
   )
 }
 
