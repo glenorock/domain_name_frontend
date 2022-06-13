@@ -162,3 +162,30 @@
   flex-grow: 1;
 }
 
+.info-cont {
+  margin: 25px;
+  & > * {
+    margin: 10px 5px;
+  }
+}
+
+.info {
+  font-size: large;
+  display: flex;
+  border-bottom: 1px solid #C0C0C0;
+  & > *{
+    padding: 0px 15px;
+  }
+  & .lable {
+    font-weight: bold;
+    text-transform: uppercase;
+    border-right: 1px solid #C0C0C0;
+    width: 25%;
+  }
+
+  & .value {
+    flex-grow: 1;
+    border-left: 1px solid #C0C0C0;
+    
+  }
+}

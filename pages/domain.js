@@ -1,5 +1,5 @@
 import Page from '../components/pageAdmin';
-
+import DomainInfo from '../components/info/domain';
 export default function Domain() {
   
   return (
@@ -10,7 +10,7 @@ export default function Domain() {
             </div>
           </div>
           <div className='box'>
-            Domain Information
+            <DomainInfo/>
           </div>
       </Page>
   )
