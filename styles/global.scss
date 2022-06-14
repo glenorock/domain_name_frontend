@@ -65,10 +65,10 @@
 .active {
   background-color: $secondarybg;
   color: $secondaryColor;
-    &:hover {
-      box-shadow: -1px 1px $primarybg2, -2px 2px $secondarybg, -3px 3px $secondarybg, -4px 4px $secondarybg,
-      -5px 5px $secondarybg;  
-    }
+  &:hover {
+    box-shadow: -1px 1px $primarybg2, -2px 2px $secondarybg, -3px 3px $secondarybg, -4px 4px $secondarybg,
+      -5px 5px $secondarybg;
+  }
 }
 
 .inactive {
@@ -123,7 +123,6 @@
   padding: 5px 20px;
   display: flex;
   flex-direction: column;
-
 }
 
 .admin-page .sidebar {
@@ -131,11 +130,11 @@
 }
 
 // admin-header
-.admin-header{
+.admin-header {
   display: flex;
   justify-content: flex-end;
   padding: 5px;
-  box-shadow: 1px -1px 2px 1px #C0C0C0,-1px 1px 2px 1px #C0C0C0;
+  box-shadow: 1px -1px 2px 1px #c0c0c0, -1px 1px 2px 1px #c0c0c0;
   width: 100%;
   & > .title {
     width: 50%;
@@ -145,7 +144,7 @@
     padding: 0px 2%;
     color: $primarybg;
   }
-  & > .action_cont{
+  & > .action_cont {
     display: flex;
     justify-content: flex-end;
     width: 50%;
@@ -157,9 +156,10 @@
 
 .admin-body {
   margin: 25px 0px;
-  box-shadow: 1px -1px 2px 1px #C0C0C0,-1px 1px 2px 1px #C0C0C0;
+  box-shadow: 1px -1px 2px 1px #c0c0c0, -1px 1px 2px 1px #c0c0c0;
   padding: 15px;
   flex-grow: 1;
+
 }
 
 .info-cont {
@@ -172,20 +172,99 @@
 .info {
   font-size: large;
   display: flex;
-  border-bottom: 1px solid #C0C0C0;
-  & > *{
+  border-bottom: 1px solid #c0c0c0;
+  & > * {
     padding: 0px 15px;
   }
   & .lable {
     font-weight: bold;
     text-transform: uppercase;
-    border-right: 1px solid #C0C0C0;
+    border-right: 1px solid #c0c0c0;
     width: 25%;
   }
 
   & .value {
     flex-grow: 1;
-    border-left: 1px solid #C0C0C0;
-    
+    border-left: 1px solid #c0c0c0;
   }
 }
+
+// tables
+.data-table {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.table thead {
+  background: $primarybg;
+  color: $primaryColor;
+}
+
+.table thead tr th {
+  padding: 20px 15px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+  border: 2px solid $primarybg;
+}
+
+.table tbody tr td {
+  font-size: 16px;
+  padding: 5px;
+  vertical-align: middle;
+  color: $primarybg;
+  border: 2px solid $primarybg;
+  border-top: 0;
+  border-collapse: collapse;
+  overflow: auto;
+}
+
+.table tbody tr td strong {
+  font-weight: 600;
+}
+
+.table tbody tr td svg {
+  font-size: 26px;
+}
+
+.table tbody tr td span {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+// .table tbody tr:hover {
+//   td {
+//     color: $primaryColor;
+//     background: $primarybg2;
+//     border-left: 2px solid $primaryColor;
+//     border-right: 2px solid $primaryColor;
+//   }
+//   & > td:first-child{
+//     border-left: 2px solid $primarybg;
+//   }
+//   & > td:last-child{
+//     border-right: solid 2px $primarybg;
+//   }
+// }
+
+.fixed-col{
+  width: 120px;
+}
+
+.action-cell {
+  display: flex;
+  justify-content: center;
+  & > * {
+    margin: 0 0 0 15px ;
+  }
+}
+

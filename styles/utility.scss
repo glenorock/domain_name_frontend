@@ -2,7 +2,7 @@
 
 $primary: #00008b;
 $primarybg: #07222f;
-$primarybg2: #0e4763;
+$primarybg2: #155f85;
 $primaryColor: #fff;
 $secondarybg: #c5990c;
 $secondaryColor: #07222f;
@@ -158,4 +158,21 @@ img {
     box-shadow: 1px -1px 2px 1px #C0C0C0,-1px 1px 2px 1px #C0C0C0;
     padding: 5px 15px;
     border-radius: 7px;
+}
+
+.danger {
+    color: red;
+}
+
+.action-btn {
+    cursor: pointer;
+    border: solid transparent 1px;
+    padding: 5px;
+    &:hover {
+        border: solid $primarybg 1px;
+        color: $primaryColor;
+        background: $primarybg;
+        border-radius: 50%;
+    }
+    
 }
