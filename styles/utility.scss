@@ -152,6 +152,9 @@ img {
 .left-align{
     display: flex;
     justify-content:flex-end;
+    & > *{
+        margin-right: 20px;
+    }
 }
 
 .box{
@@ -180,4 +183,16 @@ img {
         border-radius: 50%;
     }
     
+}
+
+.icon {
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    & > *:hover{
+        color: $primaryColor;
+        background: $primarybg;
+        border-radius: 50%;
+    }
 }

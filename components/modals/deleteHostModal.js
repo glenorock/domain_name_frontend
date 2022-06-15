@@ -7,7 +7,7 @@ export default function DeleteHostModal({onSubmit, onClose}) {
                  Delete this address?
             </div>
             <hr/>
-            <div className='modal-action'>
+            <div className='action'>
                 <div className='btn' onClick={onSubmit}>
                     Delete
                 </div>

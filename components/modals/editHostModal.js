@@ -41,7 +41,7 @@ export default function EditHostModal({data, onSubmit, onClose}) {
                 </Stack>
             </div>
             <hr/>
-            <div className='modal-action'>
+            <div className='action'>
                 <div className='btn' onClick={onSubmit}>
                     Save
                 </div>

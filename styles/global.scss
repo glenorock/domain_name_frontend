@@ -194,7 +194,7 @@
   display: flex;
   justify-content: center;
   margin: 20px;
-  overflow: auto;
+  // overflow: auto;
 }
 
 .table {
@@ -225,7 +225,7 @@
   border: 2px solid $primarybg;
   border-top: 0;
   border-collapse: collapse;
-  overflow: auto;
+  // overflow: auto;
 }
 
 .table tbody tr td strong {
@@ -277,7 +277,7 @@
     color: $primarybg;
 }
 
-.modal-action{
+.action{
   display: flex;
   justify-content:flex-end;
   margin: 10px 0px;

@@ -10,64 +10,11 @@ import DeleteHostModal from '../modals/deleteHostModal';
 import EditHostModal from '../modals/editHostModal';
 
 export default function HostList({data}) {
-  const initialRows = [{
-      name: "test",
-      ip: [
-        {
-          ver:4,
-          value: "ip1"
-        },
-        {
-          ver:4,
-          value: "ip2"
-        },
-        {
-          ver:4,
-          value: "ip3"
-        },
-      ]
-    },
-    {
-      name: "test",
-      ip: [
-        {
-          ver:4,
-          value: "ip1"
-        },
-        {
-          ver:4,
-          value: "ip2"
-        },
-        {
-          ver:4,
-          value: "ip3"
-        },
-      ]
-    },
-    {
-      name: "test",
-      ip: [
-        {
-          ver:4,
-          value: "ip1"
-        },
-        {
-          ver:4,
-          value: "ip2"
-        },
-        {
-          ver:4,
-          value: "ip3"
-        },
-      ]
-    },
-  ];
-  const [tableData, setTableData] = React.useState(initialRows)
+  const [tableData, setTableData] = React.useState(data|| [])
   const [loading, setLoading] = React.useState(false)
   const [showEditModal, setShowEditModal] = React.useState(false);
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [selectedHost, setSelectedHost] = React.useState(null);
-  const [showAddModal, setShowAddModal] = React.useState(false);
 
   const handleDelete = (event) => {
     event.preventDefault();
@@ -124,7 +71,7 @@ export default function HostList({data}) {
                   <tr>
                     <th scope="col">{'name'}</th>
                     <th scope="col">{'version'}</th>
-                    <th scope="col">{'org'}</th>
+                    <th scope="col">{'IP'}</th>
                     <th className='fixed-col' scope="col">{'action'}</th>
                           
                   </tr>
