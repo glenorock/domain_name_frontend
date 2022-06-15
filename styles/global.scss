@@ -241,21 +241,6 @@
   font-weight: 300;
 }
 
-// .table tbody tr:hover {
-//   td {
-//     color: $primaryColor;
-//     background: $primarybg2;
-//     border-left: 2px solid $primaryColor;
-//     border-right: 2px solid $primaryColor;
-//   }
-//   & > td:first-child{
-//     border-left: 2px solid $primarybg;
-//   }
-//   & > td:last-child{
-//     border-right: solid 2px $primarybg;
-//   }
-// }
-
 .fixed-col{
   width: 120px;
 }
@@ -288,6 +273,9 @@
 
 .modal-body{
   padding: 10px;
+  max-height: 80vh;
+  width: 40vw;
+  overflow: auto;
   & > * {
     margin: 25px;
   }

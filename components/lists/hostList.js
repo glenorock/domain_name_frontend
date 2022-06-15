@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import Loader from '../Loader';
 import { Table } from 'react-bootstrap';
 import { 
@@ -9,12 +9,75 @@ import Modal from '@mui/material/Modal';
 import DeleteHostModal from '../modals/deleteHostModal';
 import EditHostModal from '../modals/editHostModal';
 
-export default function HostList({data}) {
-  const [tableData, setTableData] = React.useState(data|| [])
-  const [loading, setLoading] = React.useState(false)
+export default function HostList() {
+  const data = [{
+    name: "test",
+    ip: [
+      {
+        ver:4,
+        value: "ip1"
+      },
+      {
+        ver:4,
+        value: "ip2"
+      },
+      {
+        ver:4,
+        value: "ip3"
+      },
+    ]
+  },
+  {
+    name: "test",
+    ip: [
+      {
+        ver:4,
+        value: "ip1"
+      },
+      {
+        ver:4,
+        value: "ip2"
+      },
+      {
+        ver:4,
+        value: "ip3"
+      },
+    ]
+  },
+  {
+    name: "test",
+    ip: [
+      {
+        ver:4,
+        value: "ip1"
+      },
+      {
+        ver:4,
+        value: "ip2"
+      },
+      {
+        ver:4,
+        value: "ip3"
+      },
+    ]
+  },
+  ];
+  const [tableData, setTableData] = React.useState([])
+  const [loading, setLoading] = React.useState(true)
   const [showEditModal, setShowEditModal] = React.useState(false);
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [selectedHost, setSelectedHost] = React.useState(null);
+
+  const LoadData = () => {
+    setTimeout(() => {
+      setTableData(data || []);
+      setLoading(false);
+    },2000);
+  }
+
+  useEffect(() => {
+    LoadData();
+  }, [tableData]);
 
   const handleDelete = (event) => {
     event.preventDefault();

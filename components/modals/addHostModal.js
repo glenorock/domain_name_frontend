@@ -22,6 +22,7 @@ export default function AddHostModal({onClose}) {
             [key]: event.target.value,
         })
     }
+    
     const IPVersions = [
         {
             value:'v4',
