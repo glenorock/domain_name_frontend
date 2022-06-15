@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {BiHomeSmile, BiPaperPlane, BiPlusCircle} from 'react-icons/bi';
+import {BiHomeSmile, BiPaperPlane, BiPlusCircle, BiServer, BiUser} from 'react-icons/bi';
 import SidebarMenu from './sideBarMenu';
 import Image from 'next/image'
 import Logo from '../../images/logo.png';
@@ -20,16 +20,22 @@ const Sidebar = () => {
         </div>
         <ul>
             <SidebarMenu href="/domain">
-              <BiHomeSmile />
-              <span>{t('Domain')}</span>
+              <div className='icon-btn'>
+                <BiHomeSmile />
+                <span>{t('Domain')}</span>
+              </div>
             </SidebarMenu>
             <SidebarMenu href="/contact">
-              <BiPlusCircle />
-              <span>{t('Contact')}</span>
+              <div className='icon-btn'>
+                <BiUser />
+                <span>{t('Contacts')}</span>
+              </div>
             </SidebarMenu>
             <SidebarMenu href="/host">
-              <BiPaperPlane />
-              <span>{t('Name sever')}</span>
+              <div className='icon-btn'>
+                <BiServer />
+                <span>{t('Name severs')}</span>
+              </div>
             </SidebarMenu>
         </ul>
       </div>
