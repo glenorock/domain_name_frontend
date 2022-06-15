@@ -5,8 +5,11 @@ import {
   BiEditAlt,
   BiTrash
 } from "react-icons/bi";
+import Modal from '@mui/material/Modal';
+import DeleteHostModal from '../modals/deleteHostModal';
+import EditHostModal from '../modals/editHostModal';
 
-export default function HostList() {
+export default function HostList({data}) {
   const initialRows = [{
       name: "test",
       ip: [
@@ -61,6 +64,54 @@ export default function HostList() {
   ];
   const [tableData, setTableData] = React.useState(initialRows)
   const [loading, setLoading] = React.useState(false)
+  const [showEditModal, setShowEditModal] = React.useState(false);
+  const [showDeleteModal, setShowDeleteModal] = React.useState(false);
+  const [selectedHost, setSelectedHost] = React.useState(null);
+  const [showAddModal, setShowAddModal] = React.useState(false);
+
+  const handleDelete = (event) => {
+    event.preventDefault();
+    alert("Delete host");
+  }
+
+  const handleEdit = (event) => {
+    event.preventDefault();
+    alert("edit")
+  }
+
+  const openDeleteModal = (name,ip) => (event) => {
+    event.preventDefault();
+    setShowDeleteModal(true)
+    setSelectedHost({
+      name: name,
+      ver:ip.ver,
+      ip: ip.value
+    })
+  }
+
+  const closeDeleteModal = (event) => {
+    event.preventDefault();
+    setShowDeleteModal(false);
+    setSelectedHost(null);
+  }
+
+  const openEditModal = (name,ip) => (event) => {
+    event.preventDefault();
+    setShowEditModal(true);
+    setSelectedHost({
+      name: name,
+      ver:ip.ver,
+      ip: ip.value
+    })
+  }
+
+  const closeEditModal = (event) => {
+    event.preventDefault();
+    setShowEditModal(false);
+    setSelectedHost(null);
+  }
+
+  
   return (
       <>
         {
@@ -92,10 +143,10 @@ export default function HostList() {
                                 <td scope="col">{ip.value}</td>
                                 <td scope="col" >
                                   <div className='action-cell'>
-                                    <div className='action-btn'>
+                                    <div className='action-btn' onClick={openEditModal(ele.name,ip)}>
                                       <BiEditAlt/>
                                     </div>
-                                    <div className='action-btn'>
+                                    <div className='action-btn' onClick={openDeleteModal(ele.name,ip)}>
                                       <BiTrash/>
                                     </div>
                                   </div>
@@ -108,6 +159,21 @@ export default function HostList() {
                   ))}
                 </tbody>
               </Table>
+              {/* Modal */}
+              <div>
+                <Modal
+                  open={showEditModal}
+                  onClose={() => setShowEditModal(false)}
+                >
+                  <EditHostModal data={selectedHost} onClose={closeEditModal} onSubmit={handleEdit}/>
+                </Modal>
+                <Modal
+                  open={showDeleteModal}
+                  onClose={() => setShowDeleteModal(false)}
+                >
+                  <DeleteHostModal onClose={closeDeleteModal} onSubmit={handleDelete}/>
+                </Modal>
+              </div>
             </div>
           )
         }

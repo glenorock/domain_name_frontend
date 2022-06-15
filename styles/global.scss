@@ -268,3 +268,27 @@
   }
 }
 
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $primaryColor;
+    color: $primarybg;
+}
+
+.modal-action{
+  display: flex;
+  justify-content:flex-end;
+  margin: 10px 0px;
+  & > * {
+    margin-left: 10px;
+  }
+}
+
+.modal-body{
+  padding: 10px;
+  & > * {
+    margin: 25px;
+  }
+}
