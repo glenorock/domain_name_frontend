@@ -34,7 +34,7 @@ const Sidebar = () => {
             <SidebarMenu href="/host">
               <div className='icon-btn'>
                 <BiServer />
-                <span>{t('Name severs')}</span>
+                <span>{t('Hosts')}</span>
               </div>
             </SidebarMenu>
         </ul>

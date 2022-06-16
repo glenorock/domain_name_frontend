@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { 
     BiEditAlt,
     BiTrash
-  } from "react-icons/bi";
+} from "react-icons/bi";
 export default function AddHostModal({onClose}) {
     const [host, setHost] = React.useState({
         name: '',
