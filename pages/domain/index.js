@@ -1,6 +1,6 @@
-import Page from '../components/pageAdmin';
-import DomainInfo from '../components/info/domain';
-import DomainActions from '../components/action/domain';
+import Page from '../../components/pageAdmin';
+import DomainInfo from '../../components/info/domain';
+import DomainActions from '../../components/action/domain';
 export default function Domain() {
   let data = {
     'contacts': {
