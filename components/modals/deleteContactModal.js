@@ -1,6 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function DeleteHostModal({onSubmit, onClose}) {
+    const { t } = useTranslation();
     return(
         <div className='modal box'>
             <div className='modal-body'>

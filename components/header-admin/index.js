@@ -1,11 +1,14 @@
 import LanguageSwitch from '../header/LanguageSwitch';
 import LogOut from './logout';
+import { useTranslation } from 'react-i18next';
 
-const Header = () => {
+const Header = ({name}) => {
+    const { t } = useTranslation();
+
     return(
         <div className='admin-header'>
             <div className='title'>
-                Domain name
+                {name}
             </div>
             <div className='action_cont'>
                 <LanguageSwitch/>

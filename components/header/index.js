@@ -3,8 +3,11 @@ import LanguageSwitch from "./LanguageSwitch";
 import Image from 'next/image'
 import Logo from '../../images/logo.png';
 import Login from "./Login";
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
+    const { t } = useTranslation();
+
     return(
         <div className="site-header">
             <div className="brand-logo">

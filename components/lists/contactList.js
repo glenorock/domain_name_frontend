@@ -3,6 +3,7 @@ import Loader from "../Loader";
 import { Table } from 'react-bootstrap';
 import { useEffect } from "react";
 import Modal from '@mui/material/Modal';
+import { useTranslation } from 'react-i18next';
 import { 
     BiEditAlt,
     BiTrash
@@ -11,6 +12,8 @@ import EditContactModal from '../modals/editContactModal';
 import DeleteContactModal from '../modals/deleteContactModal';
 import * as countryUtils from '../../util/country';
 export default function ContactList(){
+    const { t } = useTranslation();
+
     let conts = [
         {
             role:"Type one",

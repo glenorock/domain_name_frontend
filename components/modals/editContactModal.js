@@ -4,6 +4,7 @@ import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
+import { useTranslation } from 'react-i18next';
 
 const countries = require('../../data/CountryCodes.json');
 
@@ -28,6 +29,8 @@ const ContactTypes = [
 ]
 
 export default function AddContactModal({data,onClose}) {
+    const { t } = useTranslation();
+
     const [contact, setContact] = React.useState(data)
     const handleChange = (key) => (event) => {
         event.preventDefault();

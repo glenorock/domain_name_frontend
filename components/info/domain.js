@@ -1,6 +1,10 @@
 import React from "react";
 import Info from "./info";
+import { useTranslation } from 'react-i18next';
+
 export default function DomainInfo({domain}) {
+    const { t } = useTranslation();
+
     return (
         <div>
             <div className="info-cont">

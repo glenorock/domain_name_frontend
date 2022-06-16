@@ -8,8 +8,11 @@ import {
 import Modal from '@mui/material/Modal';
 import DeleteHostModal from '../modals/deleteHostModal';
 import EditHostModal from '../modals/editHostModal';
+import { useTranslation } from 'react-i18next';
 
 export default function HostList() {
+  const { t } = useTranslation();
+
   const data = [{
     name: "test",
     ip: [

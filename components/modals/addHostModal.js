@@ -8,6 +8,8 @@ import {
     BiEditAlt,
     BiTrash
 } from "react-icons/bi";
+import { useTranslation } from 'react-i18next';
+
 export default function AddHostModal({onClose}) {
     const [host, setHost] = React.useState({
         name: '',
@@ -15,6 +17,8 @@ export default function AddHostModal({onClose}) {
         tmp_ip: '',
         tmp_ver: 'v4',
     });
+    const { t } = useTranslation();
+
     const handleChange = (key) => (event) => {
         event.preventDefault();
         setHost({

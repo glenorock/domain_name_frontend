@@ -3,8 +3,11 @@ import { Modal } from '@mui/material';
 import { BiSync, BiEditAlt } from "react-icons/bi";
 import RenewDomainModal from '../modals/renewDomainModal';
 import EditDomainModal from '../modals/editDomainModal';
+import { useTranslation } from 'react-i18next';
 
 export default function DomainActions({domain}) {
+    const { t } = useTranslation();
+
     const [showRenewModal, setShowRenewModal] = React.useState(false);
     const [showEditModal, setShowEditModal] = React.useState(false);
     

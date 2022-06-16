@@ -1,6 +1,7 @@
 import React from "react";
 import { TextField } from "@mui/material";
 import { BiX,BiPlus } from "react-icons/bi";
+import { useTranslation } from 'react-i18next';
 export default function EditDomainModal({domain, onClose}) {
     const [ns,setNs] = React.useState([...domain.ns]);
     const [tmp,setTmp] = React.useState('');
@@ -20,6 +21,8 @@ export default function EditDomainModal({domain, onClose}) {
         alert('Domain updated');
         onClose(e);
     }
+    const { t } = useTranslation();
+
     return(
         <div className='modal box'>
             <div className='modal-body'>

@@ -1,6 +1,7 @@
 import React from "react";
 import { TextField } from "@mui/material";
 import { Stack } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 export default function RenewDomainModal({domain, onClose}) {
     const [period,setPeriod] = React.useState(1);
     const [price,setPrice] = React.useState(7000);
@@ -10,7 +11,8 @@ export default function RenewDomainModal({domain, onClose}) {
         alert(`renewal ${period} year for ${price}`);
         onClose(e);
     }
-
+    const { t } = useTranslation();
+    
     return(
         <div className='modal box'>
             <div className='modal-body'>

@@ -1,10 +1,12 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
+import { useTranslation } from 'react-i18next';
 
 export default function EditHostModal({data, onSubmit, onClose}) {
     const [info,setInfo] = React.useState(data);
-    
+    const { t } = useTranslation();
+
     const handleChange = (key) => (e) => {
         setInfo({...info, [key]: e.target.value});
     }

@@ -2,12 +2,14 @@ import React from "react";
 import { TextField } from "@mui/material";
 import { Stack } from "@mui/material";
 import Router from 'next/router';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginModal({onClose}) {
     const [state, setState] = React.useState({
         domain:"",
         password:""
     })
+    const { t } = useTranslation();
 
     const onChange = (key) => (event) => {
         setState({

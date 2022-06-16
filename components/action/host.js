@@ -2,7 +2,9 @@ import React from 'react'
 import { Modal } from '@mui/material';
 import { BiPlusCircle } from "react-icons/bi";
 import AddHostModal from '../modals/addHostModal';
+import { useTranslation } from 'react-i18next';
 export default function HostActions() {
+    const { t } = useTranslation();
     const [showAddModal, setShowAddModal] = React.useState(false);
     const openModal = (event) => {
         event.preventDefault();

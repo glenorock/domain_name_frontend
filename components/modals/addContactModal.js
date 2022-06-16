@@ -4,9 +4,8 @@ import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
-
+import { useTranslation } from 'react-i18next';
 const countries = require('../../data/CountryCodes.json');
-
 
 const ContactTypes = [
     {
@@ -28,6 +27,8 @@ const ContactTypes = [
 ]
 
 export default function AddContactModal({onClose}) {
+    const { t } = useTranslation();
+
     const [contact, setContact] = React.useState({
         role:"Type one",
         name:"",
