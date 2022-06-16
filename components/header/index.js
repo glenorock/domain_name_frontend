@@ -1,8 +1,10 @@
+import React from "react";
 import LanguageSwitch from "./LanguageSwitch";
 import Image from 'next/image'
 import Logo from '../../images/logo.png';
+import Login from "./Login";
 
-const Header = (props) => {
+const Header = () => {
     return(
         <div className="site-header">
             <div className="brand-logo">
@@ -19,17 +21,9 @@ const Header = (props) => {
             <div className="lng-switch-cont">
                 <LanguageSwitch/>
             </div>
-            {/* {
-                props?.connected?(
-                    <>
-                        Disconnect
-                    </>
-                ):(
-                    <>
-                        Connect
-                    </>
-                )
-            } */}
+            <div className="lng-switch-cont">
+                <Login/>
+            </div>
         </div>
     )
 };

@@ -37,6 +37,10 @@ body {
     font-family: $siteFont;
     font-weight: 400;
     font-size: 16px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
 }
 
 a {

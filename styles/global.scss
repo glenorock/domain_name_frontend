@@ -52,13 +52,14 @@
   text-align: center;
   background: $primarybg;
   color: $white;
+  flex-grow: 1;
 }
 
 .site-body {
   margin: 0px;
   margin-top: 50px;
   padding: 2% 10%;
-  border: solid 5px $secondarybg;
+  min-height: 80vh;
 }
 
 // side-bar
@@ -302,5 +303,17 @@
     &:first-child {
       flex-grow: 1;
     }
+  }
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  & > *:first-child {
+    margin-right: 5px;
+  }
+  &:hover {
+    color: $secondarybg;
+    text-decoration: underline;
   }
 }
