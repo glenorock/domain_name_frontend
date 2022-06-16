@@ -14,7 +14,7 @@ const LogOutButt = () => {
         <div>
             <Button className=" btn" onClick={openModal}>
                 <BiLogOut/>
-                LogOut
+                {t('LogOut')}
             </Button>
             <Modal open={showModal} onClose={closeModal} >
                 <LogOutModal onClose={closeModal}/>

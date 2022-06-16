@@ -1,5 +1,28 @@
  {
    "translation": {
-      "Add":"Ajouter"
+     "Add": "Ajouter",
+     "Renew": "Renouveler",
+     "Modify": "Modifier",
+     "Footer": "Bas de page",
+     "Domain name management platform": "Plateforme de gestion de noms de domaine",
+     "Login": "Connexion",
+     "LogOut": "Déconnexion",
+     "Created": "Créé",
+     "Modified": "Modifié",
+     "Expires": "Expire",
+     "Registrar Name": "Nom du bureau d'enregistrement",
+     "Registration URL": "URL d'enregistrement",
+     "Name severs": "Serveurs de noms",
+     "Name": "Nom",
+     "Email": "E-mail",
+     "Org": "Organisation",
+     "Country": "Pays",
+     "Tel": "Tél",
+     "Action": "Action",
+     "Save": "Sauvegarder",
+     "Cancel": "Annuler",
+     "Update": "Mettre à jour",
+     "Yes": "Oui",
+     "No": "Non"
    }
  }

@@ -180,10 +180,10 @@ export default function AddContactModal({data,onClose}) {
             <hr/>
             <div className='action'>
                 <div className='btn' onClick={addContact}>
-                    Update
+                    {t("Update")}
                 </div>
                 <div className='btn btn-danger' onClick={onClose}>
-                    Cancel
+                    {t("Cancel")}
                 </div>
             </div>
         </div>

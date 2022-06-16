@@ -17,10 +17,10 @@ export default function LogOutModal({onClose}) {
             <hr/>
             <div className='action'>
                 <div className='btn' onClick={submit}>
-                    Yes
+                    {t("Yes")}
                 </div>
                 <div className='btn btn-danger' onClick={onClose}>
-                    No
+                    {t("No")}
                 </div>
             </div>
         </div>

@@ -19,7 +19,7 @@ export default function HostActions() {
         <div>
             <div className='left-align'>
                 <div className='btn h-center'  onClick={openModal}>
-                    <BiPlusCircle/> Add
+                    <BiPlusCircle/> {t('Add')}
                 </div>
             </div>
             <Modal open={showAddModal} onClose={closeModal}>

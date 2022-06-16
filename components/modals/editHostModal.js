@@ -45,10 +45,10 @@ export default function EditHostModal({data, onSubmit, onClose}) {
             <hr/>
             <div className='action'>
                 <div className='btn' onClick={onSubmit}>
-                    Save
+                    {t("Save")}
                 </div>
                 <div className='btn btn-danger' onClick={onClose}>
-                    Cancel
+                    {t("Cancel")}
                 </div>
             </div>
         </div>

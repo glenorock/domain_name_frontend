@@ -128,13 +128,13 @@ export default function ContactList(){
                     <Table>
                         <thead>
                             <tr >
-                                <th scope="col">{'name'}</th>
-                                <th scope="col">{'email'}</th>
-                                <th scope="col">{'org'}</th>
-                                <th scope="col">{'Country'}</th>
-                                <th scope="col">{'City'}</th>
-                                <th scope="col">{'Tel'}</th>
-                                <th scope="col">{'Action'}</th>
+                                <th scope="col">{t('Name')}</th>
+                                <th scope="col">{t('Email')}</th>
+                                <th scope="col">{t('Org')}</th>
+                                <th scope="col">{t('Country')}</th>
+                                <th scope="col">{t('City')}</th>
+                                <th scope="col">{t('Tel')}</th>
+                                <th scope="col">{t('Action')}</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -50,10 +50,10 @@ export default function LoginModal({onClose}) {
             <hr/>
             <div className='action'>
                 <div className='btn' onClick={submit}>
-                    Login
+                    {t("Login")}
                 </div>
                 <div className='btn btn-danger' onClick={onClose}>
-                    Cancel
+                    {t("Cancel")}
                 </div>
             </div>
         </div>

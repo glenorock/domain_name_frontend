@@ -6,15 +6,15 @@ export default function DeleteHostModal({onSubmit, onClose}) {
     return(
         <div className='modal box'>
             <div className='modal-body'>
-                 Delete this contact?
+                {t("Delete this contact?")}
             </div>
             <hr/>
             <div className='action'>
                 <div className='btn' onClick={onSubmit}>
-                    Delete
+                    {t("Delete")}
                 </div>
                 <div className='btn btn-danger' onClick={onClose}>
-                    Cancel
+                    {t("Cancel")}
                 </div>
             </div>
         </div>

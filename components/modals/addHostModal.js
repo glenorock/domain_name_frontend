@@ -166,10 +166,10 @@ export default function AddHostModal({onClose}) {
             <hr/>
             <div className='action'>
                 <div className='btn' onClick={addHost}>
-                    Save
+                    {t('Save')}
                 </div>
                 <div className='btn btn-danger' onClick={onClose}>
-                    Cancel
+                    {t('Cancel')}
                 </div>
             </div>
         </div>

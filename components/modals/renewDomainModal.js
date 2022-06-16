@@ -44,10 +44,10 @@ export default function RenewDomainModal({domain, onClose}) {
             <hr/>
             <div className='action'>
                 <div className='btn' onClick={submit}>
-                    Renew
+                    {t("Renew")}
                 </div>
                 <div className='btn btn-danger' onClick={onClose}>
-                    Cancel
+                    {t("Cancel")}
                 </div>
             </div>
         </div>

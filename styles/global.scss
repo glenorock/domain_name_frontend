@@ -85,6 +85,7 @@
   padding: 10px 0px;
   font-size: large;
   padding-top: 25px;
+  min-height: 100vh;
 }
 
 .sidebar .brand-logo {
@@ -124,6 +125,7 @@
   padding: 5px 20px;
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
 
 .admin-page .sidebar {

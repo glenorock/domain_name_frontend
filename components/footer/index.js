@@ -6,7 +6,7 @@ const Footer = () => {
 
     return(
         <div className="site-footer">
-            Footer
+            {t('Footer')}
         </div>
     );
 };

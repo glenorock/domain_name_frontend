@@ -8,16 +8,16 @@ export default function DomainInfo({domain}) {
     return (
         <div>
             <div className="info-cont">
-                <Info lable="Created" value={domain.crDate} />
-                <Info lable="Modified" value={domain.upDate} />
-                <Info lable="Expires" value={domain.exDate} />
+                <Info lable={t("Created")} value={domain.crDate} />
+                <Info lable={t("Modified")} value={domain.upDate} />
+                <Info lable={t("Expires")} value={domain.exDate} />
             </div>
             <div className="info-cont">
-                <Info lable="Registrar Name" value={domain.crDate} />
-                <Info lable="Registration URL" value={domain.upDate} />
+                <Info lable={t("Registrar Name")} value={domain.crDate} />
+                <Info lable={t("Registration URL")} value={domain.upDate} />
             </div>
             <div className="info-cont">
-                <Info lable="Name severs" value={domain.ns} list/>
+                <Info lable={t("Name severs")} value={domain.ns} list/>
             </div>
         </div>
     )

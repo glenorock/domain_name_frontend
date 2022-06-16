@@ -23,7 +23,7 @@ export default function Login() {
                 className="btn"
                 onClick={openModal}
             >
-                <BiLogIn/> Login
+                <BiLogIn/> {t('Login')}
             </Button>
             <Modal open={showModal} onClose={closeModal}>
                 <LoginModal onClose={closeModal}/>

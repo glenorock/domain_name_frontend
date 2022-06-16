@@ -36,10 +36,10 @@ export default function DomainActions({domain}) {
         <div>
             <div className='left-align'>
             <div className='btn h-center'  onClick={openRenewModal}>
-                    <BiSync/> Renew
+                    <BiSync/> {t('Renew')}
                 </div>
                 <div className='btn h-center'  onClick={openEditModal}>
-                    <BiEditAlt/> Modify
+                    <BiEditAlt/> {t('Modify')}
                 </div> 
             </div>
             <Modal open={showRenewModal} onClose={closeRenewModal}>

@@ -135,10 +135,10 @@ export default function HostList() {
               <Table>
                 <thead>
                   <tr>
-                    <th scope="col">{'name'}</th>
-                    <th scope="col">{'version'}</th>
-                    <th scope="col">{'IP'}</th>
-                    <th className='fixed-col' scope="col">{'action'}</th>
+                    <th scope="col">{t('Name')}</th>
+                    <th scope="col">{t('Version')}</th>
+                    <th scope="col">{t('IP')}</th>
+                    <th className='fixed-col' scope="col">{t('Action')}</th>
                           
                   </tr>
                 </thead>
