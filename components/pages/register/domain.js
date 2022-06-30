@@ -18,7 +18,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Autocomplete from '@mui/material/Autocomplete';
-
+import PaymentModal from '../../modals/paymentModal';
 import * as IO_DATA from './io_data';
 import * as Styles from '../styles'
 import * as URLS from '../urls'
@@ -666,119 +666,74 @@ export default function DomainNameRegistrationForm(props){
                     pageSize={5}
                     rowsPerPageOptions={[5]}
                 />
-                {contactModal()}       
+                {contactModal()}
+                {console.log(state)}     
             </div>
         )
     }
 
-    // Page four starts here
-
-    const [payState,setPayState] = React.useState({
-        number:"",
-        method:"",
-    })
-
-    
-    const payerIcon = () =>{
-        let number = payState.number
-        let mtnReg =RegExp(/^6(5[0-4]|7\d|8)\d+$/)
-        let orangeReg =RegExp(/^6(9|5[5-9])\d+$/)
-        let operator = ""
-        let rend = ""
-        if(mtnReg.test(number)){
-            operator = "MOMO"
-            rend = (
-                <img
-                    loading="lazy"
-                    width="50"
-                    src={URLS.MomoLogo}
-                    alt=""
-                />
-            )
-        }else if(orangeReg.test(number)){
-            operator="OM"
-            rend = (
-                <img
-                    loading="lazy"
-                    width="50"
-                    src={URLS.OMLogo}
-                    alt=""
-                />
-            )
-        }else{
-            operator=""
-            rend =  (<div></div>)
-        }
-        return rend  
-    }
-
-    
-
-    const pageFour  = () =>{
-        return(
-            <div style={{ height:400, width: '100%' }}>
-                    <Stack
-                direction="column"
-                spacing={2}
-                
-            >
-                <TextField
-                    id="period"
-                    value={state.period}
-                    onChange={handleChange('period')}
-                    fullWidth
-                    required
-                    type="number"
-                    label="Number of years"
-                    placeholder='Number of years'
-                />
-                <TextField
-                    id="price"
-                    value={state.period * state.unitPrice}
-                    onChange={handleChange('price')}
-                    fullWidth
-                    required
-                    type="number"
-                    disabled
-                    label="Total Cost"
-                    placeholder='Total Cost'
-                />
-                <OutlinedInput
-                    id="payer"
-                    type="number"
-                    value={payState.number}
-                    onChange={(event) =>{
-                        
-                        setPayState({
-                            ...payState,
-                            method:getOperator(event.target.value),
-                            number:event.target.value
-                        })
-                    }}
-                    fullWidth
-                    label="Payer"
-                    placeholder="Payer's number "
-                    endAdornment={
-                        payerIcon()
-                    }
-                />
-                
-            </Stack>
-        
-            </div>    
-        )
-    }
-
     // This page is provided once the form is completely filled.
-    const [requestState,setRequestState] = React.useState({
-        payStatus : "pending",
-        hasPaid: "",
-    });
+    const [paymentInfo,setPaymentInfo] = React.useState({
+        motif:"Registration of a domain name",
+        showModal: true,
+        paid: false,
+        completed: false
+    })
+    const [regState,setRegState] = React.useState({
+        loading:false
+    })
+    const register = async () => {
+        console.log(state)
+        
+    }
+    const setPaid = (val) => {
+        setPaymentInfo({
+            ...paymentInfo,
+            paid:val,
+            completed: true,
+            showModal: false
+        })
+        if (val===true) {
+            register()
+        }
+    }
 
+    const closePaymentModal = () => {
+        setPaymentInfo({
+            ...paymentInfo,
+            showModal: false
+        })
+    }
     const finishedPage = () =>{
         return(
             <div style={{ height:400, width: '100%' }}>
-                {JSON.stringify(state)}
+                <PaymentModal 
+                    show={paymentInfo.showModal} 
+                    motif={paymentInfo.motif} 
+                    onClose={closePaymentModal}
+                    setPaid={setPaid}
+                />
+                {
+                    paymentInfo.completed?(
+                        <>
+                            {
+                                paymentInfo.paid?(
+                                    <>
+                                        Payment Successfull
+                                    </>
+                                ):(
+                                    <>
+                                        Payment Rejected
+                                    </>
+                                )
+                            }
+                        </>
+                    ) : (
+                        <>
+                            {/* Payment pending */}
+                        </>
+                    )
+                }
             </div>
         )
     }
@@ -791,8 +746,6 @@ export default function DomainNameRegistrationForm(props){
                 return pageTwo()
             case 2:
                 return pageThree()
-            case 3:
-                return pageFour()
             default:
                 return finishedPage()
         }
@@ -802,7 +755,6 @@ export default function DomainNameRegistrationForm(props){
         'Domain information',
         'Name servers',
         'Contacts',
-        'Payment information'
     ];
 
     const displayStepNavigation = () =>{

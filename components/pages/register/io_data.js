@@ -9,7 +9,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 export const HostColumns = (editHost,removeHost,showHostModal) => {
     return [
-        { field: 'name', headerName: 'Host name', flex: 1, },
+        { field: 'name', headerName: 'Name', flex: 1, },
         { field: 'version', headerName: 'Version' ,flex: 0.5},
         { field: 'addr', headerName: 'IP Address' ,flex: 1},
         {
