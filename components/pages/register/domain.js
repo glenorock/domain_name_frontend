@@ -19,7 +19,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Autocomplete from '@mui/material/Autocomplete';
 
-import * as MO from '../../../lib/mobileOperator';
 import * as IO_DATA from './io_data';
 import * as Styles from '../styles'
 import * as URLS from '../urls'
@@ -527,7 +526,7 @@ export default function DomainNameRegistrationForm(props){
                             value={contactModalState.tel}
                             onChange={handleChangeContactModal("tel")}
                             fullWidth
-                            type="number"
+                            // type="number"
                             label="Telephone number"
                             required
                         />
@@ -559,7 +558,6 @@ export default function DomainNameRegistrationForm(props){
                                 <TextField
                                 {...params}
                                 required
-                                // value={contactModalState.cc}
                                 label="Country"
                                 inputProps={{
                                     ...params.inputProps,
@@ -675,17 +673,9 @@ export default function DomainNameRegistrationForm(props){
 
     // Page four starts here
 
-    const paymentStatus = {
-        "RESTING":0,
-        "PENDING":1,
-        "SUCCESS":2,
-        "REJECTED":-1,
-    }
-
     const [payState,setPayState] = React.useState({
         number:"",
         method:"",
-        status:paymentStatus.RESTING,
     })
 
     
@@ -788,7 +778,7 @@ export default function DomainNameRegistrationForm(props){
     const finishedPage = () =>{
         return(
             <div style={{ height:400, width: '100%' }}>
-                Finished
+                {JSON.stringify(state)}
             </div>
         )
     }
@@ -810,9 +800,9 @@ export default function DomainNameRegistrationForm(props){
 
     const steps = [
         'Domain information',
-        'Host information',
-        'Contact information',
-        'Payment'
+        'Name servers',
+        'Contacts',
+        'Payment information'
     ];
 
     const displayStepNavigation = () =>{
@@ -843,7 +833,7 @@ export default function DomainNameRegistrationForm(props){
                         visibility: (state.activeStep >= steps.length)?"hidden":"visible", 
                     }}
                 >
-                    {state.activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    {state.activeStep === steps.length - 1 ? 'Submit' : 'Next'}
                     <NavigateNextIcon/>
                 </IconButton>
             </Box>

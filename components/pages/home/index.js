@@ -27,12 +27,12 @@ export default function Whois(){
     const [values, setValues] = React.useState({
         search_data: "",
         isavailable: false,
-        alternatives: "" ,
+        alternatives: [] ,
         loading:false,
         loaded:false,
         response:{},
         domain:"",
-        showAlert:true
+        showAlert:false
     });
 
     const setState = (state,value) =>{
@@ -168,7 +168,7 @@ export default function Whois(){
     }
 
     return(
-        <Stack direction="column" spacing={2}>
+        <Stack direction="column" spacing={2}  className='box'>
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={values.loading}
@@ -176,7 +176,18 @@ export default function Whois(){
                 <CircularProgress color="inherit" />
             </Backdrop>
             <FormControl sx={{ m: 1, width: '100%' }} variant="outlined">
-                <FormHelperText id="search-bar-helper-text">Domain name</FormHelperText>
+            <div className="search-title">
+                    Seach for domain name
+                </div>
+                <div className="search-note">
+                    <div className="nb">
+                        NB:
+                    </div>
+                    <div className="text">
+                        The domain name should be in the format <span>&laquo; domain.cm &raquo;</span>
+                    </div>
+                </div>
+                {/* <FormHelperText id="search-bar-helper-text">Domain name</FormHelperText> */}
                 <OutlinedInput
                     id="search_bar"
                     type="search"

@@ -19,7 +19,7 @@ const Header = () => {
                 />
             </div>
             <div className="title-header">
-                <h1>{t('Domain name management platform')}</h1>
+                {/* <h1>{t('Domain name management platform')}</h1> */}
             </div>
             <div className="lng-switch-cont">
                 <LanguageSwitch/>

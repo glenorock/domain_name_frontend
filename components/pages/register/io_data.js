@@ -102,20 +102,16 @@ export const IPVersions = [
 
 export const ContactTypes = [
     {
-        value:"Type one",
+        value:"Owner",
         label:"Owner"
     },
     {
-        value:"Type two",
+        value:"Administrator",
         label:"Administrator"
     },
     {
-        value:"Type three",
+        value:"Technician",
         label:"Technician"
-    },
-    {
-        value:"Type four",
-        label:"Billing"
     },
 ]
 

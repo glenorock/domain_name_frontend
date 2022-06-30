@@ -1,33 +1,24 @@
 import { Button } from "@mui/material";
 import React from "react";
 import { BiLogIn } from "react-icons/bi";
-import {Modal} from "@mui/material";
-import LoginModal from "../modals/logInModal";
 import { useTranslation } from 'react-i18next';
+import Router from 'next/router';
 
 export default function Login() {
-    const [showModal, setShowModal] = React.useState(false);
     const { t } = useTranslation();
-    const openModal = (event) => {
-        event.preventDefault();
-        setShowModal(true);
-    }
-    
-    const closeModal = () => {
-        setShowModal(false);
+    const submit = async (e) => {
+        e.preventDefault();
+        Router.replace(`/login`);
     }
 
     return(
         <div>
             <Button
                 className="btn"
-                onClick={openModal}
+                onClick={submit}
             >
                 <BiLogIn/> {t('Login')}
             </Button>
-            <Modal open={showModal} onClose={closeModal}>
-                <LoginModal onClose={closeModal}/>
-            </Modal>
         </div>
     )
 }

@@ -319,3 +319,57 @@
     text-decoration: underline;
   }
 }
+
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../images/background.jpg');
+  background-size: cover;
+  & .body {
+    min-width: 350px;
+    background-color: $white;
+    padding: 15px;
+    @extend .box;
+    & .form {
+      padding: 2px;
+    }
+    & .logo-cont {
+      display: flex;
+      justify-content: center;
+      & .logo {
+        width: 100px;
+        margin-bottom: 20px;
+      }
+    }
+    & hr {
+      margin: 15px 0px;
+    }
+  }
+}
+
+.search-title {
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: x-large;
+  color: $primarybg2;
+  text-decoration: underline;
+  margin-bottom: 15px;
+}
+
+.search-note {
+  display: flex;
+  font-size: large;
+  color: gray;
+  margin-bottom: 15px;
+  & .nb {
+    color: $primarybg2;
+    margin-right: 5px;
+    text-decoration: underline;
+  }
+  & .text span {
+    color: $primarybg2;
+  }
+}
