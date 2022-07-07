@@ -679,6 +679,7 @@ export default function DomainNameRegistrationForm(props){
         paid: false,
         completed: false
     })
+
     const [regState,setRegState] = React.useState({
         loading:false
     })
@@ -702,6 +703,13 @@ export default function DomainNameRegistrationForm(props){
         setPaymentInfo({
             ...paymentInfo,
             showModal: false
+        })
+    }
+
+    const openPaymentModal = () => {
+        setPaymentInfo({
+            ...paymentInfo,
+            showModal: true
         })
     }
     const finishedPage = () =>{
@@ -730,7 +738,9 @@ export default function DomainNameRegistrationForm(props){
                         </>
                     ) : (
                         <>
-                            {/* Payment pending */}
+                            <div className='center'>
+                                <span onClick={openPaymentModal}>Procceed to payment</span>
+                            </div> 
                         </>
                     )
                 }

@@ -12,7 +12,7 @@ const Page = ({children}) =>{
                 <div className='site-body'>
                     {children}
                 </div>
-                <Footer />
+                {/* <Footer /> */}
             </body>
         </>
     )

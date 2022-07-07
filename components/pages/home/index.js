@@ -21,7 +21,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DomainDetailsInfoDisplay from './domain_details_info_display';
 import Link from 'next/link'
-
+import * as EppController from '../../../lib/EppController';
 export default function Whois(){
 
     const [values, setValues] = React.useState({
@@ -59,17 +59,36 @@ export default function Whois(){
               resolve("done");
             }, 1000);
         });
-        prom.then((res) =>{
-            setValues({ 
-                ...values, 
-                domain: values.search_data,
-                loading: false,
-                loaded:true,
-                isavailable: true,
-                alternatives:["one","two","three"],
-                response:{"keyone":["valueone","dcsdc","dcvds"],"key2":["value2"]},
-                showAlert:true
-            });
+
+        prom.then(async (res) =>{
+            const check = await EppController.checkDomain(values.search_data)
+            console.log(check)
+            if (check.status !== 200) return
+            if(parseInt(check.avail) === 1){
+                setValues({ 
+                    ...values, 
+                    domain: values.search_data,
+                    loading: false,
+                    loaded:true,
+                    isavailable: true,
+                    alternatives:[],
+                    response:require('./test.json'),
+                    showAlert:true
+                });
+            }else{
+                let data = await EppController.getDomain(values.search_data)
+                console.log(data)
+                setValues({ 
+                    ...values, 
+                    domain: values.search_data,
+                    loading: false,
+                    loaded:true,
+                    isavailable: false,
+                    alternatives:[],
+                    response:data.info,
+                    showAlert:true
+                });
+            }
         })
     }
     
@@ -119,6 +138,7 @@ export default function Whois(){
 
     const showDomainDetails = () =>{
         let details = []
+        if (!values.response) return
         Object.entries(values.response).forEach(([key,value]) =>{
             details.push(
                 <DomainDetailsInfoDisplay
@@ -135,7 +155,7 @@ export default function Whois(){
         })
         return(
             <Stack direction="column" spacing={2}>
-                <Accordion>
+                {/* <Accordion>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -148,7 +168,7 @@ export default function Whois(){
                         {alts}
                     </Stack>
                 </AccordionDetails>
-                </Accordion>
+                </Accordion> */}
                 <Accordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
@@ -184,7 +204,7 @@ export default function Whois(){
                         NB:
                     </div>
                     <div className="text">
-                        The domain name should be in the format <span>&laquo; domain.cm &raquo;</span>
+                        The search is done only for domain names having the <span>&laquo; cm &raquo;</span> TLD. To search for the domain name <span>&laquo; example.cm &raquo;</span>, simply input <span>&laquo; example &raquo;</span> in the search bar
                     </div>
                 </div>
                 {/* <FormHelperText id="search-bar-helper-text">Domain name</FormHelperText> */}

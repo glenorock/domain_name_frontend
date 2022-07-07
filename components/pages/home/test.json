@@ -1,0 +1,23 @@
+{
+    "Status": "Delegated",
+    "Created": "07 Jul 2010 19:44 WAT",
+    "Modified": "27 Apr 2022 12:51 WAT",
+    "Expires": "31 Aug 2025 00:00 WAT",
+
+    "Name Servers": [
+        "dns1.antic.cm",
+        "dns2.antic.cm"
+    ],
+    "Registrar Information": [
+        "Registrar Name :  Registrar ANTIC",
+        "Registration URL : http://www.antic.cm"
+    ],
+
+    "Registrant": [
+        "Email Address : dotcm@antic.cm",
+        "Phone Number :  694 40 58 68"
+    ],
+    "International Name": "ANTIC",
+    "International Organisation": "Agence Nationale des Technologies de l'Information et de la Communication",
+    "International Address": "Bastos, Rue Ambassade de Chine Yaounde 6170 CM "
+}

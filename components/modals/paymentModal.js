@@ -9,7 +9,7 @@ export default function PaymentModal({show, onClose, motif, setPaid}){
     const { t } = useTranslation();
     const [data,setData] = useState({
         period:1,
-        unitPrice:7000,
+        unitPrice:7,
         phone:"",
     })
     const [status,setStatus] = useState({
