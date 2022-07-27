@@ -402,3 +402,15 @@
     cursor: pointer;
   }
 }
+
+.info-box {
+  // font-size:medium;
+  & span {
+    color: $primarybg2;
+    font-weight: bold;
+  }
+}
+
+.form-link {
+  color: gray;
+}

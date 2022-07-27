@@ -34,7 +34,9 @@ export default function Whois(){
         domain:"",
         showAlert:false
     });
+    const [domData,setData] = React.useState({
 
+    })
     const setState = (state,value) =>{
         setValues({ ...values, [state]: value });
     }
@@ -76,8 +78,9 @@ export default function Whois(){
                     showAlert:true
                 });
             }else{
-                let data = await EppController.getDomain(values.search_data)
+                let data = await EppController.info(values.search_data)
                 console.log(data)
+                setData(data)
                 setValues({ 
                     ...values, 
                     domain: values.search_data,
@@ -137,38 +140,8 @@ export default function Whois(){
     }
 
     const showDomainDetails = () =>{
-        let details = []
-        if (!values.response) return
-        Object.entries(values.response).forEach(([key,value]) =>{
-            details.push(
-                <DomainDetailsInfoDisplay
-                    subject={key}
-                    body={value}
-                />
-            )
-        })
-        let alts = []
-        values.alternatives.forEach((alt) =>{
-            alts.push(
-                <div>{alt}</div>
-            )
-        })
         return(
             <Stack direction="column" spacing={2}>
-                {/* <Accordion>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="alternative-panel-header"
-                >
-                    <Typography>Alternative names</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <Stack direction="row" spacing={2}>
-                        {alts}
-                    </Stack>
-                </AccordionDetails>
-                </Accordion> */}
                 <Accordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
@@ -178,8 +151,124 @@ export default function Whois(){
                         <Typography>Domain Information</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <Stack direction="column" spacing={2}>
-                            {details}
+                        <Stack direction="column" spacing={1} className="info-box">
+                            <div>
+                                <span>Query: </span> {domData?.name}
+                            </div>
+                            <div>
+                                <span>Status: </span> Delegated
+                            </div>
+                            <div>
+                                <span>Created: </span> {domData?.crDate}
+                            </div>
+                            <div>
+                                <span>Expires: </span> {domData?.exDate}
+                            </div>
+                            <div>
+                                <span>Name servers: </span>
+                                {
+                                    [...domData?.ns].map((ns) => {
+                                        return <p>{ns.name}</p>
+                                    })
+                                }
+                            </div>
+                            <div></div>
+                            <div>
+                                <span>Registrar: </span> {domData?.clID}
+                            </div>
+                                
+                            <div>
+                                <span>Registrant:</span>
+                                <p>Email: {domData?.registrant?.email}</p>
+                                <p>Telephone number: {domData?.registrant?.voice}</p>
+                                <p>
+                                    International Name: {domData?.registrant?.postalInfo?.int?.name}
+                                </p>
+                                <p>
+                                    International Organisation: {domData?.registrant?.postalInfo?.int?.org}
+                                </p>
+                                <p>
+                                    International Address:
+                                </p>
+                                <p>
+                                    {[domData?.registrant?.postalInfo?.int?.addr.street]}
+                                </p>
+                                <p>
+                                    {domData?.registrant?.postalInfo?.int?.city} {domData?.registrant?.postalInfo?.int?.addr.pc}
+                                </p>
+                                <p>
+                                    {domData?.registrant?.postalInfo?.int?.addr.cc}
+                                </p>
+                            </div>
+                            <div>
+                                <span>Admin Contact:</span>
+                                <p>Email: {domData?.contacts?.admin?.email}</p>
+                                <p>Telephone number: {domData?.contacts?.admin?.voice}</p>
+                                <p>
+                                    International Name: {domData?.contacts?.admin?.postalInfo?.int?.name}
+                                </p>
+                                <p>
+                                    International Organisation: {domData?.contacts?.admin?.postalInfo?.int?.org}
+                                </p>
+                                <p>
+                                    International Address:
+                                </p>
+                                <p>
+                                    {[domData?.contacts?.admin?.postalInfo?.int?.addr.street]}
+                                </p>
+                                <p>
+                                    {domData?.contacts?.admin?.postalInfo?.int?.city} {domData?.contacts?.admin?.postalInfo?.int?.addr.pc}
+                                </p>
+                                <p>
+                                    {domData?.contacts?.admin?.postalInfo?.int?.addr.cc}
+                                </p>
+                            </div>
+                            <div>
+                                <span>Technical Contact:</span>
+                                <p>Email: {domData?.contacts?.tech?.email}</p>
+                                <p>Telephone number: {domData?.contacts?.tech?.voice}</p>
+                                <p>
+                                    International Name: {domData?.contacts?.tech?.postalInfo?.int?.name}
+                                </p>
+                                <p>
+                                    International Organisation: {domData?.contacts?.tech?.postalInfo?.int?.org}
+                                </p>
+                                <p>
+                                    International Address:
+                                </p>
+                                <p>
+                                    {[domData?.contacts?.tech?.postalInfo?.int?.addr.street]}
+                                </p>
+                                <p>
+                                    {domData?.contacts?.tech?.postalInfo?.int?.city} {domData?.contacts?.tech?.postalInfo?.int?.addr.pc}
+                                </p>
+                                <p>
+                                    {domData?.contacts?.tech?.postalInfo?.int?.addr.cc}
+                                </p>
+                            </div>
+                            <div>
+                                <span>Billing Contact:</span>
+                                <p>Email: {domData?.contacts?.billing?.email}</p>
+                                <p>Telephone number: {domData?.contacts?.billing?.voice}</p>
+                                <p>
+                                    International Name: {domData?.contacts?.billing?.postalInfo?.int?.name}
+                                </p>
+                                <p>
+                                    International Organisation: {domData?.contacts?.billing?.postalInfo?.int?.org}
+                                </p>
+                                <p>
+                                    International Address:
+                                </p>
+                                <p>
+                                    {[domData?.contacts?.billing?.postalInfo?.int?.addr.street]}
+                                </p>
+                                <p>
+                                    {domData?.contacts?.billing?.postalInfo?.int?.city} {domData?.contacts?.billing?.postalInfo?.int?.addr.pc}
+                                </p>
+                                <p>
+                                    {domData?.contacts?.billing?.postalInfo?.int?.addr.cc}
+                                </p>
+                            </div>
                         </Stack>
                     </AccordionDetails>
                 </Accordion>

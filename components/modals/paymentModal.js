@@ -66,7 +66,7 @@ export default function PaymentModal({show, onClose, motif, setPaid}){
                     ):(
                         <div>
                             <div className="body">
-                                <label htmlFor="period">
+                                {/* <label htmlFor="period">
                                     {t('Number of Years')}
                                 </label>
                                 <input
@@ -80,7 +80,7 @@ export default function PaymentModal({show, onClose, motif, setPaid}){
                                             period:e.target.value
                                         })
                                     }}
-                                />
+                                /> */}
                                 <label htmlFor="unit">
                                     {t('Fees per year')}
                                 </label>

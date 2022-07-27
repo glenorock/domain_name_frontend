@@ -18,10 +18,19 @@ import InputAdornment from '@mui/material/InputAdornment';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Autocomplete from '@mui/material/Autocomplete';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Loader from '../../Loader';
+import Router from 'next/router';
+
 import PaymentModal from '../../modals/paymentModal';
 import * as IO_DATA from './io_data';
-import * as Styles from '../styles'
-import * as URLS from '../urls'
+import * as Styles from '../styles';
+import * as URLS from '../urls';
+import * as EPPController from '../../../lib/EppController';
 
 export default function DomainNameRegistrationForm(props){
     const [state,setState] = React.useState({
@@ -398,8 +407,89 @@ export default function DomainNameRegistrationForm(props){
         fax:"",
         email:"",
         type:"",
-        show:true
+        show:false
     })
+    const [registrant, setRegistrant] = React.useState({
+        id: "",
+        postalInfo: {
+            int: {
+                name: "",
+                org: "",
+                addr: {
+                    street: [
+                    ],
+                    city: "",
+                    sp: "",
+                    pc: "",
+                    cc: ""
+                }
+            }
+        },
+        voice: "",
+        fax: "",
+        email: ""
+    })
+    const [adminContact, setAdminContact] = React.useState({
+        id: "",
+        postalInfo: {
+            int: {
+                name: "",
+                org: "",
+                addr: {
+                    street: [
+                    ],
+                    city: "",
+                    sp: "",
+                    pc: "",
+                    cc: ""
+                }
+            }
+        },
+        voice: "",
+        fax: "",
+        email: ""
+    })
+    const [techContact, setTechContact] = React.useState({
+        id: "",
+        postalInfo: {
+            int: {
+                name: "",
+                org: "",
+                addr: {
+                    street: [
+                    ],
+                    city: "",
+                    sp: "",
+                    pc: "",
+                    cc: ""
+                }
+            }
+        },
+        voice: "",
+        fax: "",
+        email: ""
+    })
+    const [billContact, setBillContact] = React.useState({
+        id: "",
+        postalInfo: {
+            int: {
+                name: "",
+                org: "",
+                addr: {
+                    street: [
+                    ],
+                    city: "",
+                    sp: "",
+                    pc: "",
+                    cc: ""
+                }
+            }
+        },
+        voice: "",
+        fax: "",
+        email: ""
+    })
+    
 
     const handleChangeContactModal = (props) => (event) =>{
         setContactModalSate({
@@ -427,36 +517,54 @@ export default function DomainNameRegistrationForm(props){
         })
     }
 
-    const openContactModal = () =>{
-        setTimeout(() =>{
-            setContactModalSate({
-                ...contactModalState,
-                show:true
-            })
+    const openContactModal = (type) => () =>{
+        
+        setContactModalSate({
+            ...contactModalState,
+            show:true,
+            type:type
         })
     }
 
     const addContact = () =>{
         let contact = {
-            id:Date.now(),
-            name:contactModalState.name,
-            org:contactModalState.org,
-            addr:contactModalState.addr,
-            city:contactModalState.city,
-            pc:contactModalState.pc,
-            cc:contactModalState.cc,
-            tel:contactModalState.tel,
-            fax:contactModalState.fax,
-            email:contactModalState.email,
-            type:contactModalState.type
+            id: contactModalState.email.replaceAll(".","").replaceAll("@",""),
+            postalInfo: {
+                int: {
+                    name: contactModalState.name,
+                    org: contactModalState.org,
+                    addr: {
+                        street: [
+                            contactModalState.addr
+                        ],
+                        city: contactModalState.city,
+                        sp: "",
+                        pc: contactModalState.pc,
+                        cc: contactModalState.cc
+                    }
+                }
+            },
+            voice: contactModalState.tel,
+            fax: contactModalState.fax,
+            email: contactModalState.email
         }
-        let tmp= [contact].concat(state.contacts)
-        setTimeout(() =>{
-            setState({
-                ...state,
-                contacts:tmp
+        if (contactModalState.type === 'Admin'){
+            setAdminContact(contact)
+        }else if (contactModalState.type === 'Tech') {
+            setTechContact(contact)
+        }else if (contactModalState.type === 'Bill') {
+            setBillContact(contact)
+        }else if (contactModalState.type === 'Registrant') {
+            setRegistrant(contact)
+        }else {
+            let tmp= [contact].concat(state.contacts)
+            setTimeout(() =>{
+                setState({
+                    ...state,
+                    contacts:tmp
+                })
             })
-        })
+        }
         closeContactModal()
     }
 
@@ -486,16 +594,8 @@ export default function DomainNameRegistrationForm(props){
                             fullWidth
                             label="Role"
                             required
-                            select
-                        >
-                            {
-                                IO_DATA.ContactTypes.map((option) =>(
-                                    <MenuItem key={option.value} value={option.value}>
-                                        {option.label}
-                                    </MenuItem>
-                                ))
-                            }
-                        </TextField>
+                            disabled
+                        />
                         <TextField
                             id="contact_name"
                             value={contactModalState.name}
@@ -627,47 +727,154 @@ export default function DomainNameRegistrationForm(props){
         )
     }
 
-    const editContact = (row) => (event) =>{
-        setTimeout(() =>{
-            setContactModalSate({
-                ...contactModalState,
-                name:row.name,
-                org:row.org,
-                addr:row.addr,
-                city:row.city,
-                pc:row.pc,
-                cc:row.cc,
-                tel:row.tel,
-                fax:row.fax,
-                email:row.email,
-                type:row.type,
-                show:true
-            })
-        })
-        removeContact(row)(event)
-    }
     
-    const removeContact = (row) => (event) =>{
-        setTimeout(() =>{
-            setState({
-                ...state,
-                contacts:state.contacts.filter((data) => data.id !== row.id )
-            })  
-        })
+    const clearContact = (seter) => (event) => {
+        seter(
+            {
+                id: "",
+                postalInfo: {
+                    int: {
+                        name: "",
+                        org: "",
+                        addr: {
+                            street: [
+                            ],
+                            city: "",
+                            sp: "",
+                            pc: "",
+                            cc: ""
+                        }
+                    }
+                },
+                voice: "",
+                fax: "",
+                email: ""
+            }
+        )
     }
 
+    const useReg = (seter) => (event) => {
+        seter({
+            ...registrant
+        })
+    }
+    const useAdmin = (seter) => (event) => {
+        seter({
+            ...adminContact
+        })
+    }
+    const useTech = (seter) => (event) => {
+        seter({
+            ...techContact
+        })
+    }
+    
     const pageThree = () =>{
         return(
-            <div style={{ height:400, width: '100%' }}>
-                <DataGrid
+            <div style={{ height:400, width: '100%', /*padding:" 0px 30% 0px 0px "*/}}>
+                {/* <DataGrid
                     rowSpacingType="border"
                     rows={state.contacts}
                     columns={IO_DATA.ContactColumns(openContactModal,editContact,removeContact)}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
-                />
+                /> */}
                 {contactModal()}
-                {console.log(state)}     
+                <List>
+                <ListItem
+                    secondaryAction={
+                        <>
+                            <IconButton edge="end" aria-label="delete" onClick={openContactModal('Registrant')}>
+                                <EditIcon />
+                            </IconButton>
+                            <IconButton edge="end" aria-label="delete" onClick={clearContact(setRegistrant)}>
+                                <DeleteIcon />
+                            </IconButton>
+                            
+                        </>
+                    }
+                >
+                  <ListItemText
+                    primary="Registrant Contact*"
+                    secondary={registrant.email?`${registrant.postalInfo.int.name}(${registrant.email})`:""}
+                  />
+                </ListItem>
+                <ListItem
+                    secondaryAction={
+                        <>
+                            <a href='#' className='form-link' onClick={useReg(setAdminContact)}>
+                                Registrant
+                            </a>
+                            <IconButton edge="end" aria-label="delete" onClick={openContactModal('Admin')}>
+                                <EditIcon />
+                            </IconButton>
+                            <IconButton edge="end" aria-label="delete" onClick={clearContact(setAdminContact)}>
+                                <DeleteIcon />
+                            </IconButton>
+                            
+                        </>
+                    }
+                >
+                  <ListItemText
+                    primary="Administratif Contact*"
+                    secondary={adminContact.postalInfo.int.name?`${adminContact.postalInfo.int.name}(${adminContact.email})`:""}
+                  />
+                </ListItem>
+                <ListItem
+                    secondaryAction={
+                        <>
+                            <a href='#' className='form-link' onClick={useReg(setTechContact)}>
+                                Registrant
+                            </a>
+                            <span> </span>
+                            <a href='#' className='form-link' onClick={useAdmin(setTechContact)}>
+                                Admin
+                            </a>
+                            <IconButton edge="end" aria-label="delete" onClick={openContactModal('Tech')}>
+                                <EditIcon />
+                            </IconButton>
+                            <IconButton edge="end" aria-label="delete" onClick={clearContact(setTechContact)}>
+                                <DeleteIcon />
+                            </IconButton>
+                            
+                        </>
+                    }
+                >
+                  <ListItemText
+                    primary="Technical Contact*"
+                    secondary={techContact.email?`${techContact.postalInfo.int.name}(${techContact.email})`:""}
+                  />
+                </ListItem>
+                <ListItem
+                    secondaryAction={
+                        <>
+                            <a href='#' className='form-link' onClick={useReg(setBillContact)}>
+                                Registrant
+                            </a>
+                            <span> </span>
+                            <a href='#' className='form-link' onClick={useAdmin(setBillContact)}>
+                                Admin
+                            </a>
+                            <span> </span>
+                            <a href='#' className='form-link' onClick={useTech(setBillContact)}>
+                                Tech
+                            </a>
+                            <IconButton edge="end" aria-label="delete" onClick={openContactModal('Bill')}>
+                                <EditIcon />
+                            </IconButton>
+                            <IconButton edge="end" aria-label="delete" onClick={clearContact(setBillContact)}>
+                                <DeleteIcon />
+                            </IconButton>
+                            
+                        </>
+                    }
+                >
+                  <ListItemText
+                    primary="Billing Contact*"
+                    secondary={billContact.email?`${billContact.postalInfo.int.name}(${billContact.email})`:""}
+                  />
+                </ListItem>
+            </List>
             </div>
         )
     }
@@ -681,11 +888,32 @@ export default function DomainNameRegistrationForm(props){
     })
 
     const [regState,setRegState] = React.useState({
-        loading:false
+        loading:false,
+        registered:false
     })
+    
     const register = async () => {
-        console.log(state)
-        
+        let data = {
+            domain:{
+                name : state.domain + ".cm",
+                period : 1,
+                registrant : registrant.id,
+                contacts : {
+                  tech : techContact.id,
+                  admin : adminContact.id,
+                  billing : billContact.id
+                },
+                ns : Array.from(state.hosts,x => x.name)
+              },
+            contacts: [adminContact,techContact,billContact,registrant],
+            ns: state.hosts,
+            name:state.domain
+        }
+        console.log(data)
+        setRegState({loading:true})
+        let response = await EPPController.register(data)
+        console.log(response)
+        setRegState({loading:false,registered:true})
     }
     const setPaid = (val) => {
         setPaymentInfo({
@@ -694,9 +922,6 @@ export default function DomainNameRegistrationForm(props){
             completed: true,
             showModal: false
         })
-        if (val===true) {
-            register()
-        }
     }
 
     const closePaymentModal = () => {
@@ -711,6 +936,10 @@ export default function DomainNameRegistrationForm(props){
             ...paymentInfo,
             showModal: true
         })
+    }
+    const goToHomePage = () => {
+        alert("Domain name registered")
+        Router.replace('/')
     }
     const finishedPage = () =>{
         return(
@@ -727,11 +956,29 @@ export default function DomainNameRegistrationForm(props){
                             {
                                 paymentInfo.paid?(
                                     <>
-                                        Payment Successfull
+                                        {regState.loading?(
+                                            <>
+                                                <Loader height={300}/>
+                                            </>
+                                        ):(
+                                            <>
+                                            {regState.registered?(
+                                                <>
+                                                    {goToHomePage()}
+                                                </>
+                                            ):(
+                                                <div className='center underline-link'>
+                                                    <a href='#' onClick={register}>Procceed to Registration</a>
+                                                </div>
+                                            )}
+                                        </>
+                                        )}
                                     </>
                                 ):(
                                     <>
-                                        Payment Rejected
+                                        <div className='center underline-link red'>
+                                            <a href='#' onClick={register}>Payment Rejected</a>
+                                        </div>
                                     </>
                                 )
                             }
