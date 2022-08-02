@@ -414,3 +414,32 @@
 .form-link {
   color: gray;
 }
+
+.reg {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px 0px;
+  & > .form {
+    width: 80%;
+    padding: 15px;
+    & > * {
+      margin: 5px 0px;
+    }
+    & > .div {
+      border: solid 1px grey;
+      padding: 5px 10px;
+      display: flex;
+      align-items: center;
+      & > .action {
+        flex-grow: 1;
+        border: solid red 1px;
+      }
+    }
+  }
+  & > .action {
+    width: 80%;
+    padding: 5px 15px;
+    
+  }
+}
