@@ -162,7 +162,6 @@
   box-shadow: 1px -1px 2px 1px #c0c0c0, -1px 1px 2px 1px #c0c0c0;
   padding: 15px;
   flex-grow: 1;
-
 }
 
 .info-cont {
@@ -174,7 +173,6 @@
 }
 
 .info {
-  
   font-size: large;
   display: flex;
   // border-bottom: 1px solid #c0c0c0;
@@ -246,7 +244,7 @@
   font-weight: 300;
 }
 
-.fixed-col{
+.fixed-col {
   width: 120px;
 }
 
@@ -254,29 +252,29 @@
   display: flex;
   justify-content: center;
   & > * {
-    margin: 0 0 0 15px ;
+    margin: 0 0 0 15px;
   }
 }
 
 .modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: $primaryColor;
-    color: $primarybg;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $primaryColor;
+  color: $primarybg;
 }
 
-.action{
+.action {
   display: flex;
-  justify-content:flex-end;
+  justify-content: flex-end;
   margin: 10px 0px;
   & > * {
     margin-left: 10px;
   }
 }
 
-.modal-body{
+.modal-body {
   padding: 10px;
   max-height: 80vh;
   width: 40vw;
@@ -326,7 +324,7 @@
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-image: url('../images/background.jpg');
+  background-image: url("../images/background.jpg");
   background-size: cover;
   & .body {
     min-width: 350px;
@@ -352,7 +350,7 @@
 
 .search-title {
   text-align: center;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-size: x-large;
   color: $primarybg2;
   text-decoration: underline;
@@ -426,20 +424,52 @@
     & > * {
       margin: 5px 0px;
     }
-    & > .div {
-      border: solid 1px grey;
-      padding: 5px 10px;
+    & .div {
       display: flex;
+      flex-wrap: wrap;
+      width: 100%;
       align-items: center;
       & > .action {
         flex-grow: 1;
-        border: solid red 1px;
+        flex-wrap: wrap;
+        & > div {
+          padding: 0px 7px;
+          display: flex;
+          
+        }
+        & > div:hover {
+          color: blue;
+          text-decoration: underline;
+        }
       }
     }
   }
   & > .action {
     width: 80%;
     padding: 5px 15px;
+  }
+}
+
+.accordion {
+  // padding: 5px;
+  border-radius: 7px;
+  border: solid 1px #c0c0c0;
+  & .details {
+    & table {
+      border-collapse: collapse;
+    }
+    & td {
+      padding-right: 20px;
+      padding-top: 5px;
+    }
+
+    & .sep {
+      border-bottom: solid 1px #c0c0c0;
+    }
     
+  }
+  & .accordion-summary {
+    overflow: auto;
+  
   }
 }
