@@ -473,3 +473,9 @@
   
   }
 }
+
+.modal-form{
+  & * {
+    margin-bottom: 2px;
+  }
+}

@@ -13,6 +13,8 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ContactModal from "../modals/newContactModal";
+
 export default function RegistrationForm({name}) {
     const [domain, setDomain] = useState({
         name: name + ".cm",
@@ -38,79 +40,51 @@ export default function RegistrationForm({name}) {
         goal:""
     })
     const [registrant, setRegistrant] = useState({
-        id: "",
-        postalInfo: {
-            int: {
-                name: "",
-                org: "",
-                addr: {
-                    street: [],
-                    city: "",
-                    sp: "",
-                    pc: "",
-                    cc: ""
-                }
-            }
-        },
+        name: "",
+        org: "",
+        street: [],
+        city: "",
+        sp: "",
+        pc: "",
+        cc: "",
         voice: "",
         fax: "",
         email: ""
     })
     const [adminContact, setAdminContact] = useState({
-        id: "",
-        postalInfo: {
-            int: {
-                name: "",
-                org: "",
-                addr: {
-                    street: [],
-                    city: "",
-                    sp: "",
-                    pc: "",
-                    cc: ""
-                }
-            }
-        },
+        name: "",
+        org: "",
+        street: "",
+        city: "",
+        sp: "",
+        pc: "",
+        cc: "",
         voice: "",
         fax: "",
         email: ""
     })
 
     const [techContact, setTechContact] = useState({
-        id: "",
-        postalInfo: {
-            int: {
-                name: "",
-                org: "",
-                addr: {
-                    street: [],
-                    city: "",
-                    sp: "",
-                    pc: "",
-                    cc: ""
-                }
-            }
-        },
+        name: "",
+        org: "",
+        street: "",
+        city: "",
+        sp: "",
+        pc: "",
+        cc: "",
         voice: "",
         fax: "",
         email: ""
     })
 
     const [billingContact, setBillingContact] = useState({
-        id: "",
-        postalInfo: {
-            int: {
-                name: "",
-                org: "",
-                addr: {
-                    street: [],
-                    city: "",
-                    sp: "",
-                    pc: "",
-                    cc: ""
-                }
-            }
-        },
+        name: "",
+        org: "",
+        street: "",
+        city: "",
+        sp: "",
+        pc: "",
+        cc: "",
         voice: "",
         fax: "",
         email: ""
@@ -126,23 +100,21 @@ export default function RegistrationForm({name}) {
 
 
     const [showHostModal,setShowHostModal] = useState(false)
-    const [showContactModal,setShowContactModal] = useState({
-        show:false,
-        type:''
+    const [showContactModal,setShowContactModal] = useState(false)
+    const [cmc,setCMC] = useState({
+        state:{},
+        setter: () => {}
     })
     
-    const openContactModal = (type) => () => {
-        setShowContactModal({
-            show:true,
-            type:type
-        })
+    const openContactModal = (state,setter) => (e) => {
+        e.preventDefault()
+        setShowContactModal(true)
+        setCMC({state,setter})
     }
 
     const closeContactModal = () => {
-        setShowContactModal({
-            show:false,
-            type:''
-        })
+        setShowContactModal(false)
+        setCMC({state:{},setter: () => {}})
     }
 
     const openHostModal = () => {
@@ -160,11 +132,14 @@ export default function RegistrationForm({name}) {
             </div>
         )
     }
-    const contactModalComponent = (setter) => {
+    const contactModalComponent = () => {
         return(
-            <div>
-                Contact Modal
-            </div>
+            <ContactModal 
+                show={showContactModal}
+                onClose={closeContactModal}
+                setState={cmc.setter}
+                state={cmc.state}
+            />
         )
     }
     const submit = () => {
@@ -234,7 +209,11 @@ export default function RegistrationForm({name}) {
                         <div className="div">
                             Registrant's Contact*
                             <div className="action">
-                                <div>
+                                <div
+                                    onClick={(e) => {
+                                        openContactModal(registrant,setRegistrant)(e)
+                                    }}
+                                >
                                     <EditIcon />
                                 </div>
                                 <div>
@@ -253,7 +232,7 @@ export default function RegistrationForm({name}) {
                                     Name
                                 </td>
                                 <td>
-                                    {registrant.postalInfo.int.name}
+                                    {registrant.name}
                                 </td>
                             </tr>
                             <tr>
@@ -261,7 +240,7 @@ export default function RegistrationForm({name}) {
                                 Organisation
                                 </td>
                                 <td>
-                                {registrant.postalInfo.int.name}
+                                {registrant.org}
                                 </td>
                             </tr>
                             <tr>
@@ -269,7 +248,7 @@ export default function RegistrationForm({name}) {
                                 Adresse
                                 </td>
                                 <td>
-                                {registrant.postalInfo.int.addr.street.join(", ")}
+                                {registrant.street}
                                 </td>
                             </tr>
                             <tr>
@@ -277,7 +256,7 @@ export default function RegistrationForm({name}) {
                                 City
                                 </td>
                                 <td>
-                                {registrant.postalInfo.int.addr.city}
+                                {registrant.city}
                                 </td>
                             </tr>
                             <tr>
@@ -285,7 +264,7 @@ export default function RegistrationForm({name}) {
                                 Postal Code
                                 </td>
                                 <td>
-                                {registrant.postalInfo.int.addr.pc}
+                                {registrant.pc}
                                 </td>
                             </tr>
                             <tr>
@@ -293,7 +272,7 @@ export default function RegistrationForm({name}) {
                                 Country
                                 </td>
                                 <td>
-                                {registrant.postalInfo.int.addr.cc}
+                                {registrant.cc}
                                 </td>
                             </tr>
                             <tr>
@@ -333,10 +312,18 @@ export default function RegistrationForm({name}) {
                         <div className="div">
                         Administrator's contact*
                             <div className="action">
-                                <div>
+                                <div
+                                    onClick={() => {
+                                        setAdminContact({...registrant})
+                                    }}
+                                >
                                     Registrant
                                 </div>
-                                <div>
+                                <div
+                                    onClick={(e) => {
+                                        openContactModal(adminContact,setAdminContact)(e)
+                                    }}
+                                >
                                     <EditIcon />
                                 </div>
                                 
@@ -356,7 +343,7 @@ export default function RegistrationForm({name}) {
                                     Name
                                 </td>
                                 <td>
-                                    {adminContact.postalInfo.int.name}
+                                    {adminContact.name}
                                 </td>
                             </tr>
                             <tr>
@@ -364,7 +351,7 @@ export default function RegistrationForm({name}) {
                                 Organisation
                                 </td>
                                 <td>
-                                {adminContact.postalInfo.int.org}
+                                {adminContact.org}
                                 </td>
                             </tr>
                             <tr>
@@ -372,7 +359,7 @@ export default function RegistrationForm({name}) {
                                 Adresse
                                 </td>
                                 <td>
-                                {adminContact.postalInfo.int.addr.street.join(", ")}
+                                {adminContact.street}
                                 </td>
                             </tr>
                             <tr>
@@ -380,7 +367,7 @@ export default function RegistrationForm({name}) {
                                 City
                                 </td>
                                 <td>
-                                {adminContact.postalInfo.int.addr.city}
+                                {adminContact.city}
                                 </td>
                             </tr>
                             <tr>
@@ -388,7 +375,7 @@ export default function RegistrationForm({name}) {
                                 Postal Code
                                 </td>
                                 <td>
-                                {adminContact.postalInfo.int.addr.pc}
+                                {adminContact.pc}
                                 </td>
                             </tr>
                             <tr>
@@ -396,7 +383,7 @@ export default function RegistrationForm({name}) {
                                 Country
                                 </td>
                                 <td>
-                                {adminContact.postalInfo.int.addr.cc}
+                                {adminContact.cc}
                                 </td>
                             </tr>
                             <tr>
@@ -436,14 +423,26 @@ export default function RegistrationForm({name}) {
                         <div className="div">
                         Technician's contact*
                             <div className="action">
-                                <div>
+                                <div
+                                    onClick={() => {
+                                        setTechContact({...registrant})
+                                    }}
+                                >
                                     Registrant
                                 </div>
-                                <div>
+                                <div
+                                    onClick={() => {
+                                        setTechContact({...adminContact})
+                                    }}
+                                >
                                     Admin
                                 </div>
                                 
-                                <div>
+                                <div
+                                    onClick={(e) => {
+                                        openContactModal(techContact,setTechContact)(e)
+                                    }}
+                                >
                                     <EditIcon />
                                 </div>
                                 <div>
@@ -462,7 +461,7 @@ export default function RegistrationForm({name}) {
                                     Name
                                 </td>
                                 <td>
-                                    {techContact.postalInfo.int.name}
+                                    {techContact.name}
                                 </td>
                             </tr>
                             <tr>
@@ -470,7 +469,7 @@ export default function RegistrationForm({name}) {
                                 Organisation
                                 </td>
                                 <td>
-                                {techContact.postalInfo.int.org}
+                                {techContact.org}
                                 </td>
                             </tr>
                             <tr>
@@ -478,7 +477,7 @@ export default function RegistrationForm({name}) {
                                 Adresse
                                 </td>
                                 <td>
-                                {techContact.postalInfo.int.addr.street.join(", ")}
+                                {techContact.street}
                                 </td>
                             </tr>
                             <tr>
@@ -486,7 +485,7 @@ export default function RegistrationForm({name}) {
                                 City
                                 </td>
                                 <td>
-                                {techContact.postalInfo.int.addr.city}
+                                {techContact.city}
                                 </td>
                             </tr>
                             <tr>
@@ -494,7 +493,7 @@ export default function RegistrationForm({name}) {
                                 Postal Code
                                 </td>
                                 <td>
-                                {techContact.postalInfo.int.addr.pc}
+                                {techContact.pc}
                                 </td>
                             </tr>
                             <tr>
@@ -502,7 +501,7 @@ export default function RegistrationForm({name}) {
                                 Country
                                 </td>
                                 <td>
-                                {techContact.postalInfo.int.addr.cc}
+                                {techContact.cc}
                                 </td>
                             </tr>
                             <tr>
@@ -543,16 +542,32 @@ export default function RegistrationForm({name}) {
                         <div className="div">
                         Billing contact*
                             <div className="action">
-                                <div>
+                                <div
+                                    onClick={() => {
+                                        setBillingContact({...registrant})
+                                    }}
+                                >
                                     Registrant
                                 </div>
-                                <div>
+                                <div
+                                    onClick={() => {
+                                        setBillingContact({...adminContact})
+                                    }}
+                                >
                                     Admin
                                 </div>
-                                <div>
+                                <div
+                                    onClick={() => {
+                                        setBillingContact({...techContact})
+                                    }}
+                                >
                                     Tech
                                 </div>
-                                <div>
+                                <div
+                                    onClick={(e) => {
+                                        openContactModal(billingContact,setBillingContact)(e)
+                                    }}
+                                >
                                     <EditIcon />
                                 </div>
                                 <div>
@@ -571,7 +586,7 @@ export default function RegistrationForm({name}) {
                                     Name
                                 </td>
                                 <td>
-                                    {billingContact.postalInfo.int.name}
+                                    {billingContact.name}
                                 </td>
                             </tr>
                             <tr>
@@ -579,7 +594,7 @@ export default function RegistrationForm({name}) {
                                 Organisation
                                 </td>
                                 <td>
-                                {billingContact.postalInfo.int.org}
+                                {billingContact.org}
                                 </td>
                             </tr>
                             <tr>
@@ -587,7 +602,7 @@ export default function RegistrationForm({name}) {
                                 Adresse
                                 </td>
                                 <td>
-                                {billingContact.postalInfo.int.addr.street.join(", ")}
+                                {billingContact.street}
                                 </td>
                             </tr>
                             <tr>
@@ -595,7 +610,7 @@ export default function RegistrationForm({name}) {
                                 City
                                 </td>
                                 <td>
-                                {billingContact.postalInfo.int.addr.city}
+                                {billingContact.city}
                                 </td>
                             </tr>
                             <tr>
@@ -603,7 +618,7 @@ export default function RegistrationForm({name}) {
                                 Postal Code
                                 </td>
                                 <td>
-                                {billingContact.postalInfo.int.addr.pc}
+                                {billingContact.pc}
                                 </td>
                             </tr>
                             <tr>
@@ -611,7 +626,7 @@ export default function RegistrationForm({name}) {
                                 Country
                                 </td>
                                 <td>
-                                {billingContact.postalInfo.int.addr.cc}
+                                {billingContact.cc}
                                 </td>
                             </tr>
                             <tr>
