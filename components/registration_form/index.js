@@ -14,7 +14,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ContactModal from "../modals/newContactModal";
-
+import HostModal from "../modals/newHostModal";
 export default function RegistrationForm({name}) {
     const [domain, setDomain] = useState({
         name: name + ".cm",
@@ -90,15 +90,7 @@ export default function RegistrationForm({name}) {
         email: ""
     })
 
-    const [ns, setNs] = useState({
-        name: "",
-        addrs: {
-            ip: "",
-            version: ""
-        }
-    })
-
-
+    
     const [showHostModal,setShowHostModal] = useState(false)
     const [showContactModal,setShowContactModal] = useState(false)
     const [cmc,setCMC] = useState({
@@ -106,6 +98,12 @@ export default function RegistrationForm({name}) {
         setter: () => {}
     })
     
+    const addHost = (host) => {
+        setDomain({
+            ...domain,
+            ns: domain.ns.concat(host)
+        })
+    }
     const openContactModal = (state,setter) => (e) => {
         e.preventDefault()
         setShowContactModal(true)
@@ -125,11 +123,13 @@ export default function RegistrationForm({name}) {
         setShowHostModal(false)
     }
 
-    const hostModalComponent = (ns) => {
+    const hostModalComponent = () => {
         return(
-            <div>
-                Host Modal
-            </div>
+            <HostModal
+                show={showHostModal}
+                onClose={closeHostModal}
+                addList={addHost}
+            />
         )
     }
     const contactModalComponent = () => {
@@ -666,7 +666,9 @@ export default function RegistrationForm({name}) {
                         <div className="div">
                         DNS servers*
                             <div className="action">
-                                <div>
+                                <div
+                                    onClick={openHostModal}
+                                >
                                     <EditIcon />
                                 </div>
                                 <div>

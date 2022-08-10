@@ -136,6 +136,9 @@ img {
  .v-center {
     display: flex;
     align-items: center;
+    & * {
+        margin: 0px 1px;
+    } 
  }
 
  .h-center {
@@ -217,4 +220,10 @@ img {
 
 .red {
     color:red;
+}
+
+table {
+    & th {
+        margin-right: 100px;
+    }
 }
