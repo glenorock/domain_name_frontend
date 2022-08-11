@@ -42,7 +42,7 @@ export default function RegistrationForm({name}) {
     const [registrant, setRegistrant] = useState({
         name: "",
         org: "",
-        street: [],
+        street: " ",
         city: "",
         sp: "",
         pc: "",

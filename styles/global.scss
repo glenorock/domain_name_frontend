@@ -251,9 +251,6 @@
 .action-cell {
   display: flex;
   justify-content: center;
-  & > * {
-    margin: 0 0 0 15px;
-  }
 }
 
 .modal {
@@ -435,7 +432,6 @@
         & > div {
           padding: 0px 7px;
           display: flex;
-          
         }
         & > div:hover {
           color: blue;
@@ -466,16 +462,42 @@
     & .sep {
       border-bottom: solid 1px #c0c0c0;
     }
-    
   }
   & .accordion-summary {
     overflow: auto;
-  
   }
 }
 
-.modal-form{
+.modal-form {
   & * {
     margin-bottom: 2px;
+  }
+}
+
+.admin-table {
+  overflow: auto;
+  height: 100%;
+  & table {
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+  }
+  & .table {
+    & td,
+    & tr {
+      border: 1px solid #c0c0c0;
+      padding: 8px;
+    }
+    & tr:nth-child(even) {
+      background-color: #ddd;
+    }
+    & tr:hover {background-color: #aaa;}
+    & th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: center;
+      background-color: $primarybg;
+      color: $primaryColor;
+    }
   }
 }
