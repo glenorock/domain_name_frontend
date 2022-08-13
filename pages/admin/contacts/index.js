@@ -6,11 +6,24 @@ import Countries from '../../../data/CountryCodes.json';
 
 export default function(){
     const [contacts,setContacts] = useState([])
+    const [page,setPage] = useState(1)
+    const [limit,setLimit] = useState(10)
+    const [range,setRange] = useState([1,2,3,4,5])
     let refresh = 1
     useEffect(async () => {
-        let tmp = await adminContacts.getAllContacts()
+        let tmp = await adminContacts.getAllContacts(page,limit)
         setContacts(tmp)
-    },[refresh])
+    },[refresh,page,limit])
+    const goToPage = (i) => () => {
+        setPage(i)
+    }
+    const nextPage = () => {
+        setPage(page+1)
+    }
+
+    const prevPage = () => {
+        setPage(page-1)
+    }
     return(
         <Page>
             <div className="admin-table">
@@ -48,6 +61,29 @@ export default function(){
                         }
                     </tbody>
                 </table>
+                <div className="pagination">
+                        <div 
+                            onClick={prevPage}
+                            style={{
+                                display:(page<=1)?"none":"block"
+                            }}
+                        >
+                            &laquo;
+                        </div>
+                        {range.map(i => (
+                            <div onClick={goToPage(i)} className={(i===page)?"current":""}>
+                                {i}
+                            </div>
+                        ))}
+                        <div
+                         onClick={nextPage}
+                         style={{
+                            display:(page>=range.length)?"none":"block"
+                        }}
+                        >
+                            &raquo;
+                        </div>
+                </div>
             </div>
         </Page>
     )
