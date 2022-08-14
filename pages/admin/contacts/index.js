@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import Page from '../../../components/admin/page';
+import ContactModal from '../../../components/modals/ContactModal';
 import * as adminContacts from '../../../lib/adminContacts';
 import Countries from '../../../data/CountryCodes.json';
 
@@ -9,6 +10,19 @@ export default function(){
     const [page,setPage] = useState(1)
     const [limit,setLimit] = useState(10)
     const [range,setRange] = useState([1,2,3,4,5])
+    const [seletectContact,setSelectedContact] = useState({})
+    const [showModal,setShowModal] = useState(false)
+    
+    const openModal = (contact)  => () => {
+        setSelectedContact({...contact})
+        setShowModal(true)
+    }
+
+    const closeModal = () => {
+        setSelectedContact({})
+        setShowModal(false)
+    }
+
     let refresh = 1
     useEffect(async () => {
         let tmp = await adminContacts.getAllContacts(page,limit)
@@ -54,7 +68,7 @@ export default function(){
                                     <td>{ele.fax}</td>
                                     <td>{ele.email}</td>
                                     <td style={{display:'flex',justifyContent:'center'}}>
-                                        <EditIcon/>
+                                        <EditIcon onClick={openModal(ele)}/>
                                     </td>
                                 </tr>
                             ))
@@ -84,6 +98,12 @@ export default function(){
                             &raquo;
                         </div>
                 </div>
+                <ContactModal 
+                    show={showModal}
+                    onClose={closeModal}
+                    state={seletectContact}
+                    setState={adminContacts.updateContact}
+                />
             </div>
         </Page>
     )

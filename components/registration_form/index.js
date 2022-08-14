@@ -13,8 +13,8 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ContactModal from "../modals/newContactModal";
-import HostModal from "../modals/newHostModal";
+import ContactModal from "../modals/ContactModal";
+import HostModal from "../modals/HostModal";
 export default function RegistrationForm({name}) {
     const [domain, setDomain] = useState({
         name: name + ".cm",

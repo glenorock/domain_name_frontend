@@ -19,8 +19,25 @@ export default function newContactModal({show,onClose,state,setState}){
         fax: "",
         email: ""
     })
+    const [value,setValue] = useState({})
+    const options = Countries.map((option,index) => {
+        return {
+            id:index,
+            lable: `${option.name} (${option.code}) (${option.dial_code})`
+        }
+    })
     useEffect(() =>{
         setContact({...state})
+        let index = Countries.findIndex((value) => value.code === state?.cc)
+        if (index === -1) {
+            setValue({})
+        }else{
+            let option = Countries[index]
+            setValue({
+                id:index,
+                lable: `${option?.name} (${option?.code}) (${option?.dial_code})`
+            })
+        }
     },[state])
     const handlechange = (prop) => (e) => {
         setContact({
@@ -108,29 +125,36 @@ export default function newContactModal({show,onClose,state,setState}){
                         onChange={handlechange('pc')}
                     />
                     <Autocomplete
-                        options={Countries}
+                        options={options}
                         autoHighlight
-                        onChange={(event,value,reason) =>{
+                        value={value}
+                        onChange={(event,val,reason) =>{
+                            let c = Countries[val.id]
+                            setValue(val)
                             setContact({
                                 ...contact,
-                                cc:value?value.code:""
+                                cc:c?c.code:""
                             })
                         }}
-                        groupBy={(option) => option.name.charAt(0)}
-                        inputValue={Countries.filter((value) => value.code === contact.cc)[0]?.name}
-                        getOptionLabel={(option) => option.name}
-                        renderOption={(props, option) => (
-                            <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                            <img
-                                loading="lazy"
-                                width="20"
-                                src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                                srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                                alt=""
-                            />
-                            {option.name} ({option.code}) ({option.dial_code})
-                            </Box>
-                        )}
+                        inputValue={Countries.filter((value) => value.code === contact.cc)[0]}
+                        getOptionLabel={(option) => option.lable}
+                        renderOption={(props, option) => {
+                            let c = Countries[option.id]
+                            return(
+                                (
+                                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                                    <img
+                                        loading="lazy"
+                                        width="20"
+                                        src={`https://flagcdn.com/w20/${c.code.toLowerCase()}.png`}
+                                        srcSet={`https://flagcdn.com/w40/${c.code.toLowerCase()}.png 2x`}
+                                        alt=""
+                                    />
+                                    {option.lable}
+                                    </Box>
+                                )
+                            )
+                        }}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
