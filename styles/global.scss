@@ -481,6 +481,7 @@
     width: 100%;
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
+    table-layout: auto;
   }
   & .table {
     & td,
@@ -521,5 +522,22 @@
     &:hover {
       background: $secondarybg;
     }
+  }
+}
+
+.status {
+  border: solid #c0c0c0 1px;
+  padding: 7px;
+  border-radius: 15px;
+  color: white;
+  &.success {
+    background: green;
+  }
+  &.reject {
+    background: red;
+  }
+  &.pending {
+    background: #c0c0c0;
+    color: black;
   }
 }

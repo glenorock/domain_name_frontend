@@ -19,12 +19,12 @@ const Sidebar = () => {
             </div>
         </div>
         <ul>
-            <SidebarMenu href="/admin">
+            {/* <SidebarMenu href="/admin">
               <div className='icon-btn'>
                 <BiHomeSmile />
                 <span>{t('Dashbord')}</span>
               </div>
-            </SidebarMenu>
+            </SidebarMenu> */}
             <SidebarMenu href="/admin/requests">
               <div className='icon-btn'>
                 <BiHomeSmile />

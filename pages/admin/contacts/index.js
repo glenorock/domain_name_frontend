@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import Page from '../../../components/admin/page';
 import ContactModal from '../../../components/modals/ContactModal';
-import * as adminContacts from '../../../lib/adminContacts';
+import * as useContacts from '../../../data/useContacts';
 import Countries from '../../../data/CountryCodes.json';
 
 export default function(){
@@ -25,7 +25,7 @@ export default function(){
 
     let refresh = 1
     useEffect(async () => {
-        let tmp = await adminContacts.getAllContacts(page,limit)
+        let tmp = await useContacts.getAllContacts(page,limit)
         setContacts(tmp)
     },[refresh,page,limit])
     const goToPage = (i) => () => {
@@ -102,7 +102,7 @@ export default function(){
                     show={showModal}
                     onClose={closeModal}
                     state={seletectContact}
-                    setState={adminContacts.updateContact}
+                    setState={useContacts.updateContact}
                 />
             </div>
         </Page>

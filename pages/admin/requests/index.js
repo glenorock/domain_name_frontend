@@ -1,18 +1,33 @@
 import React, { useState, useEffect } from "react";
-import EditIcon from '@mui/icons-material/Edit';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { TextField, MenuItem } from "@mui/material";
 import Page from '../../../components/admin/page';
-import * as adminContacts from '../../../lib/adminContacts';
-import Countries from '../../../data/CountryCodes.json';
+import * as useRequests from '../../../data/useRequests';
+import DomainDetailsModal from '../../../components/modals/domainDetails';
 
 export default function(){
-    const [contacts,setContacts] = useState([])
+    const [requests,setRequests] = useState([])
     const [page,setPage] = useState(1)
     const [limit,setLimit] = useState(10)
     const [range,setRange] = useState([1,2,3,4,5])
+    const [status,setStatus] = useState('all')
+    const [selectedRequest,setSelectedRequest] = useState({})
+    const [showModal,setShowModal] = useState(false)
+
+    const statuses = ['all','accepted','rejected','pending']
+
+    const openModal = (req) => () => {
+        setSelectedRequest(req)
+        setShowModal(true)
+    }
+    const closeModal = () => {
+        setSelectedRequest({})
+        setShowModal(false)
+    }
     let refresh = 1
     useEffect(async () => {
-        let tmp = await adminContacts.getAllContacts(page,limit)
-        setContacts(tmp)
+        let tmp = await useRequests.getAllRequests(page,limit,status)
+        setRequests(tmp)
     },[refresh,page,limit])
     const goToPage = (i) => () => {
         setPage(i)
@@ -24,37 +39,52 @@ export default function(){
     const prevPage = () => {
         setPage(page-1)
     }
+    const statusStyle = (stat) => {
+        switch(stat){
+            case 'accepted':
+                return 'success'
+            case 'rejected':
+                return 'reject'
+            case 'pending':
+                return 'pending'
+            default:
+                return ''
+        }
+    }
     return(
         <Page>
             <div className="admin-table">
+                <div style={{display:'flex', justifyContent:'flex-end', marginBottom:'5px'}}>
+                    <TextField
+                        value={status}
+                        onChange={(e) => {
+                            setStatus(e.target.value)
+                        }}
+                        select
+                    >
+                        {statuses.map((opt) => (
+                            <MenuItem key={opt} value={opt}>
+                                {opt}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </div>
                 <table className="table">
                     <thead>
-                        <th>Name</th>
-                        <th>Organisation</th>
-                        <th>Addresse</th>
-                        <th>City</th>
-                        <th>Postal Code</th>
-                        <th>County</th>
-                        <th>Telephone</th>
-                        <th>Fax</th>
-                        <th>Email</th>
+                        <th>Domain name</th>
+                        <th>Date</th>
+                        <th>Status</th>
                         <th></th>
                     </thead>
                     <tbody>
                         {
-                            contacts.map((ele) => (
+                            requests.map((ele) => (
                                 <tr>
-                                    <td>{ele.name}</td>
-                                    <td>{ele.org}</td>
-                                    <td>{ele.street}</td>
-                                    <td>{ele.city}</td>
-                                    <td>{ele.pc}</td>
-                                    <td>{Countries.filter((c) => c.code === ele.cc)[0].name}</td>
-                                    <td>{ele.voice}</td>
-                                    <td>{ele.fax}</td>
-                                    <td>{ele.email}</td>
-                                    <td style={{display:'flex',justifyContent:'center'}}>
-                                        <EditIcon/>
+                                    <td>{ele.domain}</td>
+                                    <td>{ele.date}</td>
+                                    <td><span className={`status ${statusStyle(ele.status)}`}>{ele.status}</span></td>
+                                    <td style={{display:'flex',justifyContent:'center', cursor:'pointer'}}>
+                                        <MoreHorizIcon onClick={openModal(ele)}/>
                                     </td>
                                 </tr>
                             ))
@@ -84,6 +114,11 @@ export default function(){
                             &raquo;
                         </div>
                 </div>
+                <DomainDetailsModal 
+                    show={showModal}
+                    onClose={closeModal}
+                    request={selectedRequest}
+                />
             </div>
         </Page>
     )
