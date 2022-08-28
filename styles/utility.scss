@@ -20,7 +20,7 @@ $grey: #585858;
 $siteFont: "Jost", sans-serif;
 $headdingFont: "Open Sans", sans-serif;
 
-$primarygradient: linear-gradient(to right, $primarybg 0%,$primarybg2 50%, $secondarybg 100%);
+$primarygradient: linear-gradient(to right, $primarybg 0%, $primarybg2 50%, $secondarybg 100%);
 $bluegradient: linear-gradient(to right, $blue 100%, $blue2 100%);
 $bluegradient2: linear-gradient(top, #009efd, #2af598);
 
@@ -101,13 +101,12 @@ img {
     -o-user-drag: none;
 }
 
-
 /* Buttons Css */
 .btn {
     position: relative;
     font-size: 14px;
     font-weight: 600;
-    height: 40px ;
+    height: 40px;
     padding: 0px 15px;
     cursor: pointer;
     transition: 0.4s;
@@ -133,39 +132,39 @@ img {
     align-items: center;
 }
 
- .v-center {
+.v-center {
     display: flex;
     align-items: center;
     & * {
         margin: 0px 1px;
-    } 
- }
+    }
+}
 
- .h-center {
-     display: flex;
-     justify-content: center;
- }
+.h-center {
+    display: flex;
+    justify-content: center;
+}
 
 .raised {
-    box-shadow: 1px -1px 2px 1px #C0C0C0,-1px 1px 2px 1px #C0C0C0;
+    box-shadow: 1px -1px 2px 1px #c0c0c0, -1px 1px 2px 1px #c0c0c0;
 }
 
 .stack {
-    & > *{
+    & > * {
         margin: 15px 0px;
     }
 }
 
-.left-align{
+.left-align {
     display: flex;
-    justify-content:flex-end;
-    & > *{
+    justify-content: flex-end;
+    & > * {
         margin-right: 20px;
     }
 }
 
-.box{
-    box-shadow: 1px -1px 2px 1px #C0C0C0,-1px 1px 2px 1px #C0C0C0;
+.box {
+    box-shadow: 1px -1px 2px 1px #c0c0c0, -1px 1px 2px 1px #c0c0c0;
     padding: 5px 15px;
     border-radius: 7px;
 }
@@ -194,7 +193,6 @@ img {
         background: $primarybg;
         border-radius: 50%;
     }
-    
 }
 
 .icon {
@@ -202,7 +200,7 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-    & > *:hover{
+    & > *:hover {
         color: $primaryColor;
         background: $primarybg;
         border-radius: 50%;
@@ -214,17 +212,16 @@ img {
     display: flex;
     align-items: center;
     font-weight: 500;
-    
 }
 
-.underline-link{
+.underline-link {
     cursor: pointer;
     color: blue;
     text-decoration: underline;
 }
 
 .red {
-    color:red;
+    color: red;
 }
 
 table {
@@ -233,7 +230,8 @@ table {
     }
 }
 
-span.accepted {
+span.accepted,
+span.ACCEPTED {
     background: green;
     padding: 5px 15px;
     border-radius: 15px;
@@ -241,10 +239,35 @@ span.accepted {
     font-weight: bold;
 }
 
-span.rejected {
+span.rejected,
+span.REJECTED {
     background: red;
     padding: 5px 15px;
     border-radius: 15px;
     color: white;
     font-weight: bold;
+}
+
+span.PENDING {
+    background: orange;
+    padding: 5px 15px;
+    border-radius: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 5px 0;
+}
+
+td {
+    padding: 5px 0px;
+    padding-right: 5px;
+}
+
+.sep-v-5 {
+    & > * {
+        margin-bottom: 5px;
+    }
 }

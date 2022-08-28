@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { TextField, MenuItem } from "@mui/material";
+import { TextField, Menu, MenuItem } from "@mui/material";
 import Page from '../../../components/admin/page';
-// import * as useRequests from '../../../data/useRequests';
+import * as RequestLib from '../../../lib/requests';
 import DomainDetailsModal from '../../../components/modals/domainDetails';
+
 
 export default function(){
     const [requests,setRequests] = useState([])
@@ -13,10 +14,13 @@ export default function(){
     const [status,setStatus] = useState('all')
     const [selectedRequest,setSelectedRequest] = useState({})
     const [showModal,setShowModal] = useState(false)
-
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [showMenu,setShowMenu] = useState(false);
+    const [refresh,setRefresh] = useState(1);
+    
     const statuses = ['all','accepted','rejected','pending']
 
-    const openModal = (req) => () => {
+    const openModal = (req) => {
         setSelectedRequest(req)
         setShowModal(true)
     }
@@ -24,10 +28,10 @@ export default function(){
         setSelectedRequest({})
         setShowModal(false)
     }
-    let refresh = 1
     useEffect(async () => {
-        // let tmp = await useRequests.getAllRequests(page,limit,status)
-        // setRequests(tmp)
+        let tmp = await RequestLib.getRequests()
+        console.log(tmp.data)
+        setRequests(tmp.data)
     },[refresh,page,limit])
     const goToPage = (i) => () => {
         setPage(i)
@@ -39,17 +43,11 @@ export default function(){
     const prevPage = () => {
         setPage(page-1)
     }
-    const statusStyle = (stat) => {
-        switch(stat){
-            case 'accepted':
-                return 'success'
-            case 'rejected':
-                return 'reject'
-            case 'pending':
-                return 'pending'
-            default:
-                return ''
-        }
+    const closeMenu = () => {
+        setShowMenu(false)
+    }
+    const openMenu = () => {
+        setShowMenu(true)
     }
     return(
         <Page>
@@ -72,19 +70,66 @@ export default function(){
                 <table className="table">
                     <thead>
                         <th>Domain name</th>
-                        <th>Date</th>
                         <th>Status</th>
+                        <th>Date</th>
                         <th></th>
                     </thead>
                     <tbody>
                         {
                             requests.map((ele) => (
                                 <tr>
-                                    <td>{ele.domain}</td>
-                                    <td>{ele.date}</td>
-                                    <td><span className={`status ${statusStyle(ele.status)}`}>{ele.status}</span></td>
+                                    <td>{ele.Domain?.name}</td>
+                                    <td><span className={ele.status}>{ele.status}</span></td>
+                                    <td>{ele.createdAt}</td>
                                     <td style={{display:'flex',justifyContent:'center', cursor:'pointer'}}>
-                                        <MoreHorizIcon onClick={openModal(ele)}/>
+                                        <MoreHorizIcon onClick={(e) => {
+                                            openMenu(ele)
+                                            setSelectedRequest(ele)
+                                            setAnchorEl(e.currentTarget)
+                                        }}/>
+                                        <Menu
+                                            anchorEl={anchorEl}
+                                            open={showMenu && selectedRequest.id === ele.id}
+                                            onClose={closeMenu}
+                                            anchorOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'left',
+                                            }}
+                                            transformOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'left',
+                                            }}
+                                        >
+                                            <MenuItem
+                                                onClick={() => {
+                                                    openModal(ele)
+                                                    closeMenu()
+                                                }}
+                                            >
+                                                Details
+                                            </MenuItem>
+                                            {
+                                                (ele.status === 'PENDING')?(<>
+                                                    <MenuItem
+                                                        onClick={async () => {
+                                                            let tmp = await RequestLib.aceptRequest(ele.id)
+                                                            setRefresh(tmp)
+                                                        }}
+                                                    >
+                                                        Accept
+                                                    </MenuItem>
+                                                    <MenuItem
+                                                        onClick={async () => {
+                                                            let tmp = await RequestLib.rejectRequest(ele.id)
+                                                            setRefresh(tmp)
+                                                        }}
+                                                    >
+                                                        Reject
+                                                    </MenuItem>
+                                                </>):(<>
+                                                </>)
+                                            }
+                                        </Menu>
                                     </td>
                                 </tr>
                             ))
