@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { TextField, MenuItem } from "@mui/material";
 import Page from '../../../components/admin/page';
-import * as useRequests from '../../../data/useRequests';
+// import * as useRequests from '../../../data/useRequests';
 import DomainDetailsModal from '../../../components/modals/domainDetails';
 
 export default function(){
@@ -26,8 +26,8 @@ export default function(){
     }
     let refresh = 1
     useEffect(async () => {
-        let tmp = await useRequests.getAllRequests(page,limit,status)
-        setRequests(tmp)
+        // let tmp = await useRequests.getAllRequests(page,limit,status)
+        // setRequests(tmp)
     },[refresh,page,limit])
     const goToPage = (i) => () => {
         setPage(i)

@@ -5,6 +5,8 @@ import { TextField } from "@mui/material";
 import { Stack } from "@mui/material";
 import Router from 'next/router';
 import { useTranslation } from 'react-i18next';
+import * as session from '../lib/session';
+import * as cookies from 'cookies-next';
 
 export default function Login(){
     const [state,setState]  = useState({
@@ -21,7 +23,16 @@ export default function Login(){
 
     const submit = async (e) => {
         e.preventDefault();
-        Router.replace(`/domain`);
+        let res = await session.login(state.domain,state.password)
+        if (res.status === 200 && res.data.auth === true){
+            cookies.setCookie("token",res.data.token)
+            cookies.setCookie("user",res.data.userId)
+            if (res.data.isAdmin){
+                Router.replace(`/admin`);
+            }else{
+                Router.replace(`/domain`);
+            }
+        }
     }
     const cancel = async (e) => {
         e.preventDefault();

@@ -232,3 +232,19 @@ table {
         margin-right: 100px;
     }
 }
+
+span.accepted {
+    background: green;
+    padding: 5px 15px;
+    border-radius: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+span.rejected {
+    background: red;
+    padding: 5px 15px;
+    border-radius: 15px;
+    color: white;
+    font-weight: bold;
+}

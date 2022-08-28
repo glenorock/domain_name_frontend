@@ -1,6 +1,6 @@
 import Page from '../../components/pageAdmin';
 import DomainInfo from '../../components/info/domain';
-import DomainActions from '../../components/action/domain';
+// import DomainActions from '../../components/action/domain';
 export default function Domain() {
   let data = {
     'contacts': {
@@ -34,7 +34,7 @@ export default function Domain() {
   return (
       <Page>
           <div className='left-align box'>
-            <DomainActions domain={data}/>
+            {/* <DomainActions domain={data}/> */}
           </div>
           <div className='box'>
             <DomainInfo domain={data}/>

@@ -19,25 +19,19 @@ const Sidebar = () => {
             </div>
         </div>
         <ul>
-            {/* <SidebarMenu href="/admin">
-              <div className='icon-btn'>
-                <BiHomeSmile />
-                <span>{t('Dashbord')}</span>
-              </div>
-            </SidebarMenu> */}
             <SidebarMenu href="/admin/requests">
               <div className='icon-btn'>
                 <BiHomeSmile />
                 <span>{t('Requests')}</span>
               </div>
             </SidebarMenu>
-            <SidebarMenu href="/admin/domains">
+            <SidebarMenu href="/admin/users">
               <div className='icon-btn'>
                 <BiHomeSmile />
-                <span>{t('Domains')}</span>
+                <span>{t('Users')}</span>
               </div>
             </SidebarMenu>
-            <SidebarMenu href="/admin/contacts">
+            {/* <SidebarMenu href="/admin/contacts">
               <div className='icon-btn'>
                 <BiHomeSmile />
                 <span>{t('Contacts')}</span>
@@ -48,7 +42,7 @@ const Sidebar = () => {
                 <BiHomeSmile />
                 <span>{t('Settings')}</span>
               </div>
-            </SidebarMenu>
+            </SidebarMenu> */}
         </ul>
       </div>
     </>
