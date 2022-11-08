@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { 
         InputAdornment,
         IconButton,
@@ -18,7 +18,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Link from 'next/link'
+import RegistrationModal from '../modals/RegistrationModal';
 import * as EppController from '../../lib/EppController';
 export default function Whois(){
 
@@ -53,7 +53,6 @@ export default function Whois(){
             response:{},
             showAlert:true
         });
-        // simulating waiting time, shall be replaces with the request to the back end command
         let prom = new Promise((resolve,reject) => {
             setTimeout(() => {
               resolve("done");
@@ -62,8 +61,6 @@ export default function Whois(){
 
         prom.then(async (res) =>{
             const check = await EppController.checkDomain(values.search_data)
-            console.log(check)
-            if (check.status !== 200) return
             if(parseInt(check.avail) === 1){
                 setValues({ 
                     ...values, 
@@ -92,14 +89,18 @@ export default function Whois(){
         })
     }
     
+    const [showModal,setShowModal] = useState(false)
+
+    const closeModal = () => {setShowModal(false)}
+    const openModal = () => {setShowModal(true)}
     const showPurchaseProposal = () =>{
         return(
             <div>
-                <Link href={"/register/" +  values.domain}>
-                    <Button>
-                        Register domain
-                    </Button>
-                </Link>
+                <Button
+                    onClick={openModal}
+                >
+                    Register domain
+                </Button>
             </div>
 
         )
@@ -293,7 +294,6 @@ export default function Whois(){
                         The search is done only for domain names having the <span>&laquo; cm &raquo;</span> TLD. To search for the domain name <span>&laquo; example.cm &raquo;</span>, simply input <span>&laquo; example &raquo;</span> in the search bar
                     </div>
                 </div>
-                {/* <FormHelperText id="search-bar-helper-text">Domain name</FormHelperText> */}
                 <OutlinedInput
                     id="search_bar"
                     type="search"
@@ -329,7 +329,12 @@ export default function Whois(){
                         showDomainDetails()
                     )}
                 </div>
-            }            
+            }
+            <RegistrationModal
+                show={showModal}
+                onClose={closeModal}
+                name={values.search_data}
+            />           
         </Stack>
     )
     

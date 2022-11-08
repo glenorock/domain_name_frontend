@@ -15,7 +15,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ContactModal from "../modals/ContactModal";
 import HostModal from "../modals/HostModal";
-export default function RegistrationForm({name}) {
+export default function RegistrationForm({name, close}) {
     const [domain, setDomain] = useState({
         name: name + ".cm",
         period: "",
@@ -146,7 +146,7 @@ export default function RegistrationForm({name}) {
         alert("submit")
     }
     const cancel = () => {
-        alert("cancel")
+        close()
     }
     const togglePasswordVisibility = () => {
         setDomain({

@@ -23,6 +23,8 @@
      "Cancel": "Annuler",
      "Update": "Mettre à jour",
      "Yes": "Oui",
-     "No": "Non"
+     "No": "Non",
+     "Requests":"",
+     "Users":"Utilisateurs"
    }
  }

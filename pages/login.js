@@ -28,7 +28,7 @@ export default function Login(){
             cookies.setCookie("token",res.data.token)
             cookies.setCookie("user",res.data.userId)
             if (res.data.isAdmin){
-                Router.replace(`/admin`);
+                Router.replace(`/admin/requests`);
             }else{
                 Router.replace(`/domain`);
             }
